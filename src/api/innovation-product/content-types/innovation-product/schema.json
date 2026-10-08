@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "innovation_products",
+  "info": {
+    "singularName": "innovation-product",
+    "pluralName": "innovation-products",
+    "displayName": "Innovation Product",
+    "description": "Products shown on the /innovation-lab products tab (E-Visitors, SAN TRACK, SAN BOOK, REVIXSAN, SANVERSE)."
+  },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "productId": { "type": "uid", "targetField": "label", "required": true },
+    "label": { "type": "string", "required": true, "maxLength": 100 },
+    "title": { "type": "string", "required": true, "maxLength": 255 },
+    "description": { "type": "text", "maxLength": 600 },
+    "coreFeatures": { "type": "json" },
+    "mediaKind": {
+      "type": "enumeration",
+      "enum": ["image", "video"],
+      "default": "image"
+    },
+    "mediaImage": { "type": "media", "multiple": false, "required": false, "allowedTypes": ["images"] },
+    "mediaImages": { "type": "media", "multiple": true, "required": false, "allowedTypes": ["images"] },
+    "mediaAlt": { "type": "string", "maxLength": 255 },
+    "sortOrder": { "type": "integer", "default": 0 }
+  }
+}

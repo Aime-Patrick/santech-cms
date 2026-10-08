@@ -1,0 +1,17 @@
+{
+  "kind": "collectionType",
+  "collectionName": "site_stats",
+  "info": {
+    "singularName": "site-stat",
+    "pluralName": "site-stats",
+    "displayName": "Site Stat",
+    "description": "Impact counter stats shown on the home page marquee (e.g. 40+ organizations, 2500+ beneficiaries)."
+  },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "value": { "type": "integer", "required": true },
+    "suffix": { "type": "string", "required": true, "default": "+", "maxLength": 10 },
+    "label": { "type": "string", "required": true, "maxLength": 100 },
+    "sortOrder": { "type": "integer", "default": 0 }
+  }
+}

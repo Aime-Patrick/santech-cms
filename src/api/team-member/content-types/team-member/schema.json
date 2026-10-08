@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "team_members",
+  "info": {
+    "singularName": "team-member",
+    "pluralName": "team-members",
+    "displayName": "Team Member",
+    "description": "Leadership and team members shown on the /our-legacy leadership section."
+  },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "name": { "type": "string", "required": true, "maxLength": 150 },
+    "position": { "type": "string", "required": true, "maxLength": 150 },
+    "department": { "type": "string", "maxLength": 150 },
+    "expertise": { "type": "string", "maxLength": 150 },
+    "bio": { "type": "text", "maxLength": 500 },
+    "photo": { "type": "media", "multiple": false, "required": false, "allowedTypes": ["images"] },
+    "linkedIn": { "type": "string", "maxLength": 500 },
+    "sortOrder": { "type": "integer", "default": 0 }
+  }
+}

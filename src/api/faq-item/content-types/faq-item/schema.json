@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "faq_items",
+  "info": {
+    "singularName": "faq-item",
+    "pluralName": "faq-items",
+    "displayName": "FAQ Item",
+    "description": "Frequently asked questions shown on the E-Visitors product page."
+  },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "question": { "type": "string", "required": true, "maxLength": 300 },
+    "answer": { "type": "text", "required": true, "maxLength": 1000 },
+    "product": {
+      "type": "enumeration",
+      "enum": ["e-visitors", "san-track", "san-book", "revixsan", "sanverse", "general"],
+      "default": "e-visitors"
+    },
+    "sortOrder": { "type": "integer", "default": 0 }
+  }
+}

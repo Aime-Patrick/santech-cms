@@ -1,0 +1,17 @@
+{
+  "kind": "collectionType",
+  "collectionName": "journey_stages",
+  "info": {
+    "singularName": "journey-stage",
+    "pluralName": "journey-stages",
+    "displayName": "Journey Stage",
+    "description": "Company timeline milestones shown on the /our-legacy journey section."
+  },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "year": { "type": "string", "required": true, "maxLength": 10 },
+    "stage": { "type": "string", "required": true, "maxLength": 100 },
+    "description": { "type": "text", "required": true, "maxLength": 500 },
+    "sortOrder": { "type": "integer", "default": 0 }
+  }
+}

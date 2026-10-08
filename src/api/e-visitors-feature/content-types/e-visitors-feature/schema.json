@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "e_visitors_features",
+  "info": {
+    "singularName": "e-visitors-feature",
+    "pluralName": "e-visitors-features",
+    "displayName": "E-Visitors Feature",
+    "description": "Platform capability steps shown on the E-Visitors product page carousel."
+  },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "number": { "type": "string", "required": true, "maxLength": 4 },
+    "label": { "type": "string", "required": true, "maxLength": 150 },
+    "title": { "type": "string", "required": true, "maxLength": 255 },
+    "description": { "type": "text", "required": true, "maxLength": 500 },
+    "panel": { "type": "string", "maxLength": 150 },
+    "status": { "type": "string", "maxLength": 100 },
+    "iconName": { "type": "string", "maxLength": 80, "default": "BarChart3" },
+    "screen": { "type": "media", "multiple": false, "required": false, "allowedTypes": ["images"] },
+    "details": { "type": "json" },
+    "sortOrder": { "type": "integer", "default": 0 }
+  }
+}

@@ -34,6 +34,30 @@ const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Plugin =>
   },
   upload: {
     config: {
+      // ── Cloudinary upload provider ─────────────────────────────────────────
+      provider: 'cloudinary',
+      providerOptions: {
+        cloud_name: env('CLOUDINARY_CLOUD_NAME'),
+        api_key:    env('CLOUDINARY_API_KEY'),
+        api_secret: env('CLOUDINARY_API_SECRET'),
+      },
+      actionOptions: {
+        upload: {
+          folder: env('CLOUDINARY_FOLDER', 'santech/uploads'),
+          // Automatically generate responsive formats
+          eager: [
+            { width: 1200, crop: 'limit', quality: 'auto', fetch_format: 'auto' },
+            { width:  800, crop: 'limit', quality: 'auto', fetch_format: 'auto' },
+            { width:  400, crop: 'limit', quality: 'auto', fetch_format: 'auto' },
+          ],
+          eager_async: true,
+        },
+        uploadStream: {
+          folder: env('CLOUDINARY_FOLDER', 'santech/uploads'),
+        },
+        delete: {},
+      },
+      // ── File security (unchanged) ──────────────────────────────────────────
       security: {
         allowedTypes: allowedMediaTypes,
         deniedTypes,

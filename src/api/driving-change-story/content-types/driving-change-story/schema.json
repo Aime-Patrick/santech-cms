@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "driving_change_stories",
+  "info": {
+    "singularName": "driving-change-story",
+    "pluralName": "driving-change-stories",
+    "displayName": "Driving Change Story",
+    "description": "Impact and career outreach stories shown on the /driving-change page."
+  },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "title": { "type": "string", "required": true, "maxLength": 255 },
+    "slug": { "type": "uid", "targetField": "title", "required": true },
+    "sectionKey": {
+      "type": "enumeration",
+      "enum": ["impact", "career"],
+      "required": true
+    },
+    "category": { "type": "string", "required": true, "maxLength": 100 },
+    "categoryLabel": { "type": "string", "required": true, "maxLength": 100 },
+    "excerpt": { "type": "text", "required": true, "maxLength": 500 },
+    "body": { "type": "blocks" },
+    "coverImage": { "type": "media", "multiple": false, "required": false, "allowedTypes": ["images"] },
+    "coverImageAlt": { "type": "string", "maxLength": 255 },
+    "location": { "type": "string", "maxLength": 150 },
+    "institution": { "type": "string", "maxLength": 150 },
+    "statLabel": { "type": "string", "maxLength": 100 },
+    "statValue": { "type": "string", "maxLength": 100 },
+    "readingTime": { "type": "string", "maxLength": 30, "default": "3 min read" },
+    "publishedDate": { "type": "date", "required": true }
+  }
+}

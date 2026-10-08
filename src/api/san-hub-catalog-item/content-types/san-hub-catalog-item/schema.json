@@ -1,0 +1,48 @@
+{
+  "kind": "collectionType",
+  "collectionName": "san_hub_catalog_items",
+  "info": {
+    "singularName": "san-hub-catalog-item",
+    "pluralName": "san-hub-catalog-items",
+    "displayName": "SAN HUB Catalog Item",
+    "description": "Courses, programs, events and training listed in the SAN HUB catalog and join-community form."
+  },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "title": { "type": "string", "required": true, "maxLength": 255 },
+    "itemId": { "type": "uid", "targetField": "title", "required": true },
+    "category": {
+      "type": "enumeration",
+      "enum": [
+        "Courses",
+        "Programs",
+        "Upcoming training",
+        "Innovation programs",
+        "Apprenticeships / Internships",
+        "Upskilling programs",
+        "Events"
+      ],
+      "required": true
+    },
+    "focus": {
+      "type": "enumeration",
+      "enum": [
+        "Web development",
+        "Artificial intelligence",
+        "Cybersecurity",
+        "IoT & connected devices",
+        "Embedded technology",
+        "Digital transformation"
+      ]
+    },
+    "provider": { "type": "string", "maxLength": 150 },
+    "description": { "type": "text", "required": true, "maxLength": 500 },
+    "image": { "type": "media", "multiple": false, "required": false, "allowedTypes": ["images"] },
+    "format": { "type": "string", "maxLength": 100 },
+    "duration": { "type": "string", "maxLength": 100 },
+    "level": { "type": "string", "maxLength": 100 },
+    "badge": { "type": "string", "maxLength": 80 },
+    "href": { "type": "string", "maxLength": 500 },
+    "sortOrder": { "type": "integer", "default": 0 }
+  }
+}

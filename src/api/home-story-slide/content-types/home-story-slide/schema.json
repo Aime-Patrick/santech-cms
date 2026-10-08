@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "home_story_slides",
+  "info": {
+    "singularName": "home-story-slide",
+    "pluralName": "home-story-slides",
+    "displayName": "Home Story Slide",
+    "description": "Story panel slides shown in the right-column carousel on the home page."
+  },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "slideId": { "type": "string", "required": true, "maxLength": 80 },
+    "index": { "type": "string", "required": true, "maxLength": 4 },
+    "eyebrow": { "type": "string", "required": true, "maxLength": 150 },
+    "title": { "type": "string", "maxLength": 255 },
+    "body": { "type": "text", "required": true, "maxLength": 1000 },
+    "detail": { "type": "string", "maxLength": 255 },
+    "additional": { "type": "text", "maxLength": 600 },
+    "note": { "type": "text", "maxLength": 400 },
+    "variant": {
+      "type": "enumeration",
+      "enum": ["default", "services"]
+    },
+    "facts": { "type": "json" },
+    "flow": { "type": "json" },
+    "groups": { "type": "json" },
+    "items": { "type": "json" },
+    "sortOrder": { "type": "integer", "default": 0 }
+  }
+}

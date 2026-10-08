@@ -1,0 +1,22 @@
+{
+  "kind": "collectionType",
+  "collectionName": "product_milestones",
+  "info": {
+    "singularName": "product-milestone",
+    "pluralName": "product-milestones",
+    "displayName": "Product Milestone",
+    "description": "Product journey milestones shown on the E-Visitors page and other product pages."
+  },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "year": { "type": "string", "required": true, "maxLength": 10 },
+    "title": { "type": "string", "required": true, "maxLength": 150 },
+    "description": { "type": "text", "required": true, "maxLength": 500 },
+    "product": {
+      "type": "enumeration",
+      "enum": ["e-visitors", "san-track", "san-book", "revixsan", "sanverse", "general"],
+      "default": "e-visitors"
+    },
+    "sortOrder": { "type": "integer", "default": 0 }
+  }
+}

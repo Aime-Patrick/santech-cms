@@ -1,0 +1,21 @@
+services:
+  database:
+    image: postgres:16-alpine
+    container_name: santech-cms-database
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: santech_cms
+      POSTGRES_USER: santech
+      POSTGRES_PASSWORD: santech_dev_password
+    ports:
+      - "5437:5432"
+    volumes:
+      - santech_cms_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U santech -d santech_cms"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  santech_cms_postgres_data:

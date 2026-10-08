@@ -1,0 +1,12 @@
+/* Keep the SAN TECH admin workspace focused on CMS operations. */
+a[href^='https://market.strapi.io'] {
+  display: none !important;
+}
+
+li[aria-label='Deploy your application to Strapi Cloud'] {
+  display: none !important;
+}
+
+button[aria-label='Learn more on our documentation'] {
+  display: none !important;
+}

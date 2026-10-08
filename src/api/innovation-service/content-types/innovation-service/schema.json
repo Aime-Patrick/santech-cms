@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "innovation_services",
+  "info": {
+    "singularName": "innovation-service",
+    "pluralName": "innovation-services",
+    "displayName": "Innovation Service",
+    "description": "Services shown on the /innovation-lab services tab."
+  },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "serviceId": { "type": "uid", "targetField": "label", "required": true },
+    "label": { "type": "string", "required": true, "maxLength": 150 },
+    "description": { "type": "text", "required": true, "maxLength": 600 },
+    "iconName": { "type": "string", "maxLength": 80, "default": "Code2" },
+    "sortOrder": { "type": "integer", "default": 0 }
+  }
+}

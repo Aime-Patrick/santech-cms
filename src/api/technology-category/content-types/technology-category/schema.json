@@ -1,0 +1,19 @@
+{
+  "kind": "collectionType",
+  "collectionName": "technology_categories",
+  "info": {
+    "singularName": "technology-category",
+    "pluralName": "technology-categories",
+    "displayName": "Technology Category",
+    "description": "Technology stack categories shown on the /innovation-lab technologies tab."
+  },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "categoryId": { "type": "uid", "targetField": "label", "required": true },
+    "label": { "type": "string", "required": true, "maxLength": 150 },
+    "description": { "type": "text", "maxLength": 400 },
+    "items": { "type": "json" },
+    "iconName": { "type": "string", "maxLength": 80, "default": "Code2" },
+    "sortOrder": { "type": "integer", "default": 0 }
+  }
+}

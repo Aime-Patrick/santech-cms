@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "recognitions",
+  "info": {
+    "singularName": "recognition",
+    "pluralName": "recognitions",
+    "displayName": "Recognition",
+    "description": "Awards and certifications shown on the /our-legacy recognition section."
+  },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "title": { "type": "string", "required": true, "maxLength": 255 },
+    "year": { "type": "string", "required": true, "maxLength": 10 },
+    "description": { "type": "text", "required": true, "maxLength": 500 },
+    "badge": { "type": "string", "maxLength": 80 },
+    "image": { "type": "media", "multiple": false, "required": false, "allowedTypes": ["images"] },
+    "imageAlt": { "type": "string", "maxLength": 255 },
+    "sortOrder": { "type": "integer", "default": 0 }
+  }
+}

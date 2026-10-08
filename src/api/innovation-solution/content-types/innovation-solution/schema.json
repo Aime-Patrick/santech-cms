@@ -1,0 +1,19 @@
+{
+  "kind": "collectionType",
+  "collectionName": "innovation_solutions",
+  "info": {
+    "singularName": "innovation-solution",
+    "pluralName": "innovation-solutions",
+    "displayName": "Innovation Solution",
+    "description": "Solutions shown on the /innovation-lab solutions tab with capability bullet lists."
+  },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "solutionId": { "type": "uid", "targetField": "label", "required": true },
+    "label": { "type": "string", "required": true, "maxLength": 150 },
+    "description": { "type": "text", "required": true, "maxLength": 600 },
+    "subItems": { "type": "json" },
+    "iconName": { "type": "string", "maxLength": 80, "default": "Globe2" },
+    "sortOrder": { "type": "integer", "default": 0 }
+  }
+}

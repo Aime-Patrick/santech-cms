@@ -1,0 +1,17 @@
+{
+  "kind": "collectionType",
+  "collectionName": "focus_areas",
+  "info": {
+    "singularName": "focus-area",
+    "pluralName": "focus-areas",
+    "displayName": "Focus Area",
+    "description": "Company focus areas shown on the /our-legacy focus section."
+  },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "label": { "type": "string", "required": true, "maxLength": 150 },
+    "description": { "type": "text", "required": true, "maxLength": 400 },
+    "iconName": { "type": "string", "maxLength": 80, "default": "Code2" },
+    "sortOrder": { "type": "integer", "default": 0 }
+  }
+}

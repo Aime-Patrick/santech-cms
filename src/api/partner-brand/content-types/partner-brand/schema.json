@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "partner_brands",
+  "info": {
+    "singularName": "partner-brand",
+    "pluralName": "partner-brands",
+    "displayName": "Partner Brand",
+    "description": "Partner and client logos shown in the home page marquee and E-Visitors page."
+  },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "label": { "type": "string", "required": true, "maxLength": 100 },
+    "logo": { "type": "media", "multiple": false, "required": false, "allowedTypes": ["images"] },
+    "href": { "type": "string", "maxLength": 500 },
+    "showLabel": { "type": "boolean", "default": false },
+    "displayLabel": { "type": "string", "maxLength": 100 },
+    "isGovernment": { "type": "boolean", "default": false },
+    "sortOrder": { "type": "integer", "default": 0 }
+  }
+}

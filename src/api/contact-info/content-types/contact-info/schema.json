@@ -1,0 +1,23 @@
+{
+  "kind": "singleType",
+  "collectionName": "contact_info",
+  "info": {
+    "singularName": "contact-info",
+    "pluralName": "contact-infos",
+    "displayName": "Contact Info",
+    "description": "Company contact details shown on the /connect page (phone, email, address, radio link)."
+  },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "phone1": { "type": "string", "maxLength": 50 },
+    "phone2": { "type": "string", "maxLength": 50 },
+    "whatsapp": { "type": "string", "maxLength": 50 },
+    "email": { "type": "email" },
+    "emailAlt": { "type": "email" },
+    "address": { "type": "string", "maxLength": 300 },
+    "radioUrl": { "type": "string", "maxLength": 500 },
+    "radioLabel": { "type": "string", "maxLength": 150 },
+    "mapsEmbedUrl": { "type": "text" },
+    "mapsDirectionsUrl": { "type": "string", "maxLength": 500 }
+  }
+}

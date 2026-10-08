@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "opportunities",
+  "info": {
+    "singularName": "opportunity",
+    "pluralName": "opportunities",
+    "displayName": "Opportunity",
+    "description": "Fellowships, tenders, jobs and events shown on the Tech Pulse opportunities tab."
+  },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "title": { "type": "string", "required": true, "maxLength": 255 },
+    "type": {
+      "type": "enumeration",
+      "enum": ["Fellowship", "Tender", "Job", "Event", "Grant", "Internship"],
+      "required": true
+    },
+    "badge": { "type": "string", "maxLength": 80 },
+    "description": { "type": "text", "required": true, "maxLength": 500 },
+    "deadline": { "type": "string", "maxLength": 150 },
+    "href": { "type": "string", "maxLength": 500 },
+    "coverImage": { "type": "media", "multiple": false, "required": false, "allowedTypes": ["images"] },
+    "sortOrder": { "type": "integer", "default": 0 }
+  }
+}
