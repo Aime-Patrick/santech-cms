@@ -10,3 +10,9 @@ li[aria-label='Deploy your application to Strapi Cloud'] {
 button[aria-label='Learn more on our documentation'] {
   display: none !important;
 }
+
+/* Hide Strapi's optional newsletter opt-in on the first-admin registration form. */
+[name='news'],
+label:has([name='news']) {
+  display: none !important;
+}
