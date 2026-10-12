@@ -76,6 +76,69 @@ export default {
 
       applySanTechBranding();
 
+      // Remove Strapi's project-plan details card from the administrator view.
+      // The card is rendered by the core admin UI, so its markup is not available
+      // through the application config. Keep this observer narrowly scoped to the
+      // card's own pricing link and identifying labels.
+      const hideStrapiProjectDetails = () => {
+        const pricingLink = Array.from(document.querySelectorAll<HTMLAnchorElement>('a')).find((link) => {
+          const href = link.href.toLowerCase();
+          const label = link.textContent?.toLowerCase() ?? '';
+          return href.includes('strapi.io/pricing') || label.includes('see all pricing plans');
+        });
+
+        if (!pricingLink) return;
+
+        let card = pricingLink.parentElement;
+        while (card && card !== document.body) {
+          const content = card.textContent?.toLowerCase() ?? '';
+          if (content.includes('strapi version') && content.includes('current plan')) {
+            card.style.display = 'none';
+            return;
+          }
+          card = card.parentElement;
+        }
+      };
+
+      const hideStrapiMediaLibraryAnnouncement = () => {
+        const announcementText = 'introducing the new media library';
+        const announcement = Array.from(document.querySelectorAll<HTMLElement>('*')).find((element) => {
+          const content = element.textContent?.replace(/\s+/g, ' ').trim().toLowerCase() ?? '';
+          return content.includes(announcementText) && content.includes('revamped version') && content.length < 400;
+        });
+
+        if (!announcement) return;
+
+        let banner = announcement;
+        let parent = banner.parentElement;
+        while (parent && parent !== document.body) {
+          const content = parent.textContent?.replace(/\s+/g, ' ').trim().toLowerCase() ?? '';
+          if (!content.includes(announcementText) || content.length >= 400) break;
+          banner = parent;
+          parent = parent.parentElement;
+        }
+
+        banner.style.display = 'none';
+      };
+
+      const watchForStrapiProjectDetails = () => {
+        hideStrapiProjectDetails();
+        hideStrapiMediaLibraryAnnouncement();
+        if (!document.body) return;
+
+        const projectDetailsObserver = new MutationObserver(() => {
+          hideStrapiProjectDetails();
+          hideStrapiMediaLibraryAnnouncement();
+        });
+        projectDetailsObserver.observe(document.body, { childList: true, subtree: true });
+      };
+
+      if (document.body) {
+        watchForStrapiProjectDetails();
+      } else {
+        document.addEventListener('DOMContentLoaded', watchForStrapiProjectDetails, { once: true });
+      }
+
     }
   },
 };

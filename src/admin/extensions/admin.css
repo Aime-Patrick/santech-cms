@@ -3,6 +3,7 @@
 a[href^='https://market.strapi.io'],
 a[href*='/marketplace' i],
 a[href*='market.strapi.io' i],
+a[href*='strapi.io/pricing' i],
 [aria-label*='marketplace' i],
 [title*='marketplace' i],
 [data-testid*='marketplace' i] {
