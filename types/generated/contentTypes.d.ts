@@ -542,32 +542,6 @@ export interface ApiContactInfoContactInfo extends Struct.SingleTypeSchema {
   };
 }
 
-export interface ApiDrivingChangeTopicDrivingChangeTopic
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'driving_change_topics';
-  info: {
-    description: 'Section categories shown in the Driving Change browser.';
-    displayName: 'Driving Change Topic';
-    pluralName: 'driving-change-topics';
-    singularName: 'driving-change-topic';
-  };
-  options: { draftAndPublish: true };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> & Schema.Attribute.Private;
-    label: Schema.Attribute.String & Schema.Attribute.Required & Schema.Attribute.SetMinMaxLength<{ maxLength: 120 }>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'api::driving-change-topic.driving-change-topic'> & Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    sectionKey: Schema.Attribute.Enumeration<['impact', 'career']> & Schema.Attribute.Required;
-    sortOrder: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
-    subtitle: Schema.Attribute.String & Schema.Attribute.Required & Schema.Attribute.SetMinMaxLength<{ maxLength: 255 }>;
-    topicId: Schema.Attribute.UID<'label'> & Schema.Attribute.Required;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> & Schema.Attribute.Private;
-  };
-}
-
 export interface ApiDrivingChangeStoryDrivingChangeStory
   extends Struct.CollectionTypeSchema {
   collectionName: 'driving_change_stories';
@@ -642,6 +616,49 @@ export interface ApiDrivingChangeStoryDrivingChangeStory
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 255;
       }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiDrivingChangeTopicDrivingChangeTopic
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'driving_change_topics';
+  info: {
+    description: 'Section categories shown in the Driving Change browser.';
+    displayName: 'Driving Change Topic';
+    pluralName: 'driving-change-topics';
+    singularName: 'driving-change-topic';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    label: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 120;
+      }>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::driving-change-topic.driving-change-topic'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    sectionKey: Schema.Attribute.Enumeration<['impact', 'career']> &
+      Schema.Attribute.Required;
+    sortOrder: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    subtitle: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 255;
+      }>;
+    topicId: Schema.Attribute.UID<'label'> & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -892,6 +909,9 @@ export interface ApiInnovationProductInnovationProduct
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 600;
       }>;
+    detailBody: Schema.Attribute.Blocks;
+    detailImage: Schema.Attribute.Media<'images'>;
+    detailImages: Schema.Attribute.Media<'images', true>;
     label: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
@@ -911,8 +931,10 @@ export interface ApiInnovationProductInnovationProduct
     mediaImages: Schema.Attribute.Media<'images', true>;
     mediaKind: Schema.Attribute.Enumeration<['image', 'video']> &
       Schema.Attribute.DefaultTo<'image'>;
+    modules: Schema.Attribute.JSON;
     productId: Schema.Attribute.UID<'label'> & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
     sortOrder: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
     title: Schema.Attribute.String &
       Schema.Attribute.Required &
@@ -938,6 +960,7 @@ export interface ApiInnovationServiceInnovationService
     draftAndPublish: true;
   };
   attributes: {
+    coreFeatures: Schema.Attribute.JSON;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -946,6 +969,7 @@ export interface ApiInnovationServiceInnovationService
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 600;
       }>;
+    detailBody: Schema.Attribute.Blocks;
     iconName: Schema.Attribute.String &
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 80;
@@ -962,7 +986,16 @@ export interface ApiInnovationServiceInnovationService
       'api::innovation-service.innovation-service'
     > &
       Schema.Attribute.Private;
+    mediaAlt: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 255;
+      }>;
+    mediaImage: Schema.Attribute.Media<'images'>;
+    mediaImages: Schema.Attribute.Media<'images', true>;
+    mediaKind: Schema.Attribute.Enumeration<['image', 'video']> &
+      Schema.Attribute.DefaultTo<'image'>;
     publishedAt: Schema.Attribute.DateTime;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
     serviceId: Schema.Attribute.UID<'label'> & Schema.Attribute.Required;
     sortOrder: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
     updatedAt: Schema.Attribute.DateTime;
@@ -984,6 +1017,7 @@ export interface ApiInnovationSolutionInnovationSolution
     draftAndPublish: true;
   };
   attributes: {
+    coreFeatures: Schema.Attribute.JSON;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -992,6 +1026,7 @@ export interface ApiInnovationSolutionInnovationSolution
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 600;
       }>;
+    detailBody: Schema.Attribute.Blocks;
     iconName: Schema.Attribute.String &
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 80;
@@ -1008,7 +1043,16 @@ export interface ApiInnovationSolutionInnovationSolution
       'api::innovation-solution.innovation-solution'
     > &
       Schema.Attribute.Private;
+    mediaAlt: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 255;
+      }>;
+    mediaImage: Schema.Attribute.Media<'images'>;
+    mediaImages: Schema.Attribute.Media<'images', true>;
+    mediaKind: Schema.Attribute.Enumeration<['image', 'video']> &
+      Schema.Attribute.DefaultTo<'image'>;
     publishedAt: Schema.Attribute.DateTime;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
     solutionId: Schema.Attribute.UID<'label'> & Schema.Attribute.Required;
     sortOrder: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
     subItems: Schema.Attribute.JSON;
@@ -1059,6 +1103,77 @@ export interface ApiJourneyStageJourneyStage
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 10;
+      }>;
+  };
+}
+
+export interface ApiLegacyPageLegacyPage extends Struct.SingleTypeSchema {
+  collectionName: 'legacy_pages';
+  info: {
+    description: 'Editable identity, mission, vision, and company profile content for Our Legacy.';
+    displayName: 'Our Legacy Page';
+    pluralName: 'legacy-pages';
+    singularName: 'legacy-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    identityFacts: Schema.Attribute.JSON;
+    impactStats: Schema.Attribute.JSON;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::legacy-page.legacy-page'
+    > &
+      Schema.Attribute.Private;
+    missionDescription: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 1200;
+      }>;
+    missionTagline: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 180;
+      }>;
+    missionTitle: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 150;
+      }>;
+    profileDescription: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 1600;
+      }>;
+    profileFacts: Schema.Attribute.JSON;
+    profileTitle: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 180;
+      }>;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    visionDescription: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 1200;
+      }>;
+    visionTagline: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 180;
+      }>;
+    visionTitle: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 150;
+      }>;
+    whoWeAreBody: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 1200;
+      }>;
+    whoWeAreSecondaryBody: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 1200;
       }>;
   };
 }
@@ -1267,6 +1382,122 @@ export interface ApiRecognitionRecognition extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiSanHubBookCategorySanHubBookCategory
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'san_hub_book_categories';
+  info: {
+    description: 'Categories used to organize SAN HUB books and reading resources.';
+    displayName: 'SAN HUB Book Category';
+    pluralName: 'san-hub-book-categories';
+    singularName: 'san-hub-book-category';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    books: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::san-hub-book.san-hub-book'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 400;
+      }>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::san-hub-book-category.san-hub-book-category'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 120;
+      }>;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
+    sortOrder: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiSanHubBookSanHubBook extends Struct.CollectionTypeSchema {
+  collectionName: 'san_hub_books';
+  info: {
+    description: 'Books and digital reading resources shown in the SAN HUB library.';
+    displayName: 'SAN HUB Book';
+    pluralName: 'san-hub-books';
+    singularName: 'san-hub-book';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    accent: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 30;
+      }> &
+      Schema.Attribute.DefaultTo<'#0a1f44'>;
+    bookId: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    category: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::san-hub-book-category.san-hub-book-category'
+    >;
+    coverImage: Schema.Attribute.Media<'images'>;
+    coverInk: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 30;
+      }> &
+      Schema.Attribute.DefaultTo<'#e8fbff'>;
+    coverSubtitle: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 250;
+      }>;
+    coverTitle: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 150;
+      }>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 600;
+      }>;
+    file: Schema.Attribute.Media<'files'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::san-hub-book.san-hub-book'
+    > &
+      Schema.Attribute.Private;
+    pageLabel: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 20;
+      }>;
+    publishedAt: Schema.Attribute.DateTime;
+    readerUrl: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 1000;
+      }>;
+    sortOrder: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 255;
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiSanHubCatalogItemSanHubCatalogItem
   extends Struct.CollectionTypeSchema {
   collectionName: 'san_hub_catalog_items';
@@ -1296,6 +1527,8 @@ export interface ApiSanHubCatalogItemSanHubCatalogItem
       ]
     > &
       Schema.Attribute.Required;
+    courseSeries: Schema.Attribute.JSON;
+    courseTestimonials: Schema.Attribute.JSON;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1304,6 +1537,7 @@ export interface ApiSanHubCatalogItemSanHubCatalogItem
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 500;
       }>;
+    details: Schema.Attribute.JSON;
     duration: Schema.Attribute.String &
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 100;
@@ -1327,7 +1561,12 @@ export interface ApiSanHubCatalogItemSanHubCatalogItem
         maxLength: 500;
       }>;
     image: Schema.Attribute.Media<'images'>;
+    instructor: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 200;
+      }>;
     itemId: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    learningOutcomes: Schema.Attribute.JSON;
     level: Schema.Attribute.String &
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 100;
@@ -1343,12 +1582,90 @@ export interface ApiSanHubCatalogItemSanHubCatalogItem
         maxLength: 150;
       }>;
     publishedAt: Schema.Attribute.DateTime;
+    rating: Schema.Attribute.Decimal &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 5;
+          min: 0;
+        },
+        number
+      >;
+    reviewCount: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    skills: Schema.Attribute.JSON;
     sortOrder: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    stats: Schema.Attribute.JSON;
+    subtitle: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 500;
+      }>;
     title: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 255;
       }>;
+    tools: Schema.Attribute.JSON;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiSiteSettingSiteSetting extends Struct.SingleTypeSchema {
+  collectionName: 'site_settings';
+  info: {
+    description: 'Global SAN TECH website settings, media, links, and language configuration.';
+    displayName: 'Site Settings';
+    pluralName: 'site-settings';
+    singularName: 'site-setting';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    calendlyUrl: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 500;
+      }>;
+    companyProfilePdf: Schema.Attribute.Media<'files'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    defaultLanguage: Schema.Attribute.Enumeration<['en', 'rw']> &
+      Schema.Attribute.DefaultTo<'en'>;
+    eVisitorsVideoPoster: Schema.Attribute.Media<'images'>;
+    favicon: Schema.Attribute.Media<'images'>;
+    homepageVideo: Schema.Attribute.Media<'videos'>;
+    homepageVideoPoster: Schema.Attribute.Media<'images'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::site-setting.site-setting'
+    > &
+      Schema.Attribute.Private;
+    logo: Schema.Attribute.Media<'images'>;
+    publishedAt: Schema.Attribute.DateTime;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
+    siteDescription: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 500;
+      }>;
+    siteName: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }> &
+      Schema.Attribute.DefaultTo<'SAN TECH'>;
+    siteTitle: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 255;
+      }> &
+      Schema.Attribute.DefaultTo<'SAN TECH | Technology. Innovation. Impact.'>;
+    socialLinks: Schema.Attribute.Component<'shared.social-link', true>;
+    supportedLanguages: Schema.Attribute.JSON;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1633,9 +1950,21 @@ export interface ApiTestimonialTestimonial extends Struct.CollectionTypeSchema {
   };
   attributes: {
     avatar: Schema.Attribute.Media<'images'>;
+    context: Schema.Attribute.Enumeration<
+      ['e-visitors', 'san-hub', 'general', 'course']
+    > &
+      Schema.Attribute.DefaultTo<'e-visitors'>;
+    courseId: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 150;
+      }>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    dateLabel: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 80;
+      }>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -1668,9 +1997,69 @@ export interface ApiTestimonialTestimonial extends Struct.CollectionTypeSchema {
         maxLength: 150;
       }>;
     sortOrder: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    sourceLabel: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 120;
+      }>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+  };
+}
+
+export interface ApiTraineeAwardTraineeAward
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'trainee_awards';
+  info: {
+    description: 'Recognition awarded to SAN HUB trainees.';
+    displayName: 'Trainee Award';
+    pluralName: 'trainee-awards';
+    singularName: 'trainee-award';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    category: Schema.Attribute.Enumeration<
+      ['best-performer', 'learner-recognition', 'other']
+    > &
+      Schema.Attribute.DefaultTo<'best-performer'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 600;
+      }>;
+    featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    image: Schema.Attribute.Media<'images'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::trainee-award.trainee-award'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 150;
+      }>;
+    publishedAt: Schema.Attribute.DateTime;
+    sortOrder: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 150;
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    year: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 10;
+      }>;
   };
 }
 
@@ -2187,8 +2576,8 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::company-value.company-value': ApiCompanyValueCompanyValue;
       'api::contact-info.contact-info': ApiContactInfoContactInfo;
-      'api::driving-change-topic.driving-change-topic': ApiDrivingChangeTopicDrivingChangeTopic;
       'api::driving-change-story.driving-change-story': ApiDrivingChangeStoryDrivingChangeStory;
+      'api::driving-change-topic.driving-change-topic': ApiDrivingChangeTopicDrivingChangeTopic;
       'api::e-visitors-feature.e-visitors-feature': ApiEVisitorsFeatureEVisitorsFeature;
       'api::faq-item.faq-item': ApiFaqItemFaqItem;
       'api::focus-area.focus-area': ApiFocusAreaFocusArea;
@@ -2197,17 +2586,22 @@ declare module '@strapi/strapi' {
       'api::innovation-service.innovation-service': ApiInnovationServiceInnovationService;
       'api::innovation-solution.innovation-solution': ApiInnovationSolutionInnovationSolution;
       'api::journey-stage.journey-stage': ApiJourneyStageJourneyStage;
+      'api::legacy-page.legacy-page': ApiLegacyPageLegacyPage;
       'api::opportunity.opportunity': ApiOpportunityOpportunity;
       'api::partner-brand.partner-brand': ApiPartnerBrandPartnerBrand;
       'api::product-milestone.product-milestone': ApiProductMilestoneProductMilestone;
       'api::recognition.recognition': ApiRecognitionRecognition;
+      'api::san-hub-book-category.san-hub-book-category': ApiSanHubBookCategorySanHubBookCategory;
+      'api::san-hub-book.san-hub-book': ApiSanHubBookSanHubBook;
       'api::san-hub-catalog-item.san-hub-catalog-item': ApiSanHubCatalogItemSanHubCatalogItem;
+      'api::site-setting.site-setting': ApiSiteSettingSiteSetting;
       'api::site-stat.site-stat': ApiSiteStatSiteStat;
       'api::standard.standard': ApiStandardStandard;
       'api::team-member.team-member': ApiTeamMemberTeamMember;
       'api::tech-pulse-article.tech-pulse-article': ApiTechPulseArticleTechPulseArticle;
       'api::technology-category.technology-category': ApiTechnologyCategoryTechnologyCategory;
       'api::testimonial.testimonial': ApiTestimonialTestimonial;
+      'api::trainee-award.trainee-award': ApiTraineeAwardTraineeAward;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

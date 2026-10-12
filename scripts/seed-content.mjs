@@ -17,6 +17,11 @@
  *
  * Idempotent — existing records are skipped.
  */
+if (process.loadEnvFile) {
+  try {
+    process.loadEnvFile();
+  } catch {}
+}
 
 const STRAPI_URL = (process.env.STRAPI_URL ?? "http://localhost:1337").replace(/\/$/, "");
 const API_TOKEN  = process.env.STRAPI_API_TOKEN ?? "";

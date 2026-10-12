@@ -8,6 +8,12 @@
 import { spawn } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
+if (process.loadEnvFile) {
+  try {
+    process.loadEnvFile();
+  } catch {}
+}
+
 const phases = [
   ["foundation", "seed-foundation.mjs"],
   ["legacy", "seed-legacy.mjs"],

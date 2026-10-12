@@ -14,6 +14,12 @@
  * Run order matters: independent collections first.
  */
 
+if (process.loadEnvFile) {
+  try {
+    process.loadEnvFile();
+  } catch {}
+}
+
 const STRAPI_URL = (process.env.STRAPI_URL ?? "http://localhost:1337").replace(/\/$/, "");
 const API_TOKEN  = process.env.STRAPI_API_TOKEN ?? "";
 
@@ -378,7 +384,7 @@ async function seedContactInfo() {
         phone1: "+250 783 250 033",
         phone2: "+250 780 309 833",
         whatsapp: "+250 727 923 756",
-        email: "info@santechinnovate.com",
+        email: "info@santechconnect.com",
         emailAlt: "santechrw@gmail.com",
         address: "Plot 48, KN 1 Road, Sofaru Building, 3rd Floor, Muhima, Kigali, Rwanda",
         radioUrl: "https://zeno.fm/radio/san-tech/",

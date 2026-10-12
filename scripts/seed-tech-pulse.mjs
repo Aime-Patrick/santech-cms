@@ -17,6 +17,11 @@
  */
 
 // ─── Config ──────────────────────────────────────────────────────────────────
+if (process.loadEnvFile) {
+  try {
+    process.loadEnvFile();
+  } catch {}
+}
 
 const STRAPI_URL = process.env.STRAPI_URL?.replace(/\/$/, "") ?? "http://localhost:1337";
 const API_TOKEN  = process.env.STRAPI_API_TOKEN ?? "";
@@ -302,9 +307,9 @@ async function main() {
   let existingSlugs = new Set();
   try {
     const existing = await strapiGet(
-      "/api/tech-pulse-articles?fields[0]=slug&pagination[pageSize]=500&publicationState=preview"
+      "/api/tech-pulse-articles?fields[0]=slug&pagination[pageSize]=500&status=draft"
     );
-    existingSlugs = new Set((existing.data ?? []).map((d) => d.attributes?.slug ?? d.slug));
+    existingSlugs = new Set((existing.data ?? []).map((d) => d.slug));
     console.log(`   Found ${existingSlugs.size} existing article(s) in Strapi.\n`);
   } catch (err) {
     console.error("   Could not fetch existing articles — is Strapi running?\n  ", err.message);

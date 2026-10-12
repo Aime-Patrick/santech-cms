@@ -1,5 +1,11 @@
 /** Seed the editable single-type content used by Our Legacy. */
 
+if (process.loadEnvFile) {
+  try {
+    process.loadEnvFile();
+  } catch {}
+}
+
 const STRAPI_URL = (process.env.STRAPI_URL ?? "http://localhost:1337").replace(/\/$/, "");
 const API_TOKEN = process.env.STRAPI_API_TOKEN ?? "";
 

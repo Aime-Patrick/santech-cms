@@ -8,6 +8,12 @@
  * relation and should be uploaded/attached from the admin media library.
  */
 
+if (process.loadEnvFile) {
+  try {
+    process.loadEnvFile();
+  } catch {}
+}
+
 const STRAPI_URL = (process.env.STRAPI_URL ?? "http://localhost:1337").replace(/\/$/, "");
 const API_TOKEN = process.env.STRAPI_API_TOKEN ?? "";
 
@@ -55,7 +61,7 @@ for (const standard of standards) {
   };
 
   if (existing.data?.[0]) {
-    await request(`/api/standards/${existing.data[0].id}`, {
+    await request(`/api/standards/${existing.data[0].documentId}`, {
       method: "PUT",
       body: JSON.stringify(payload),
     });

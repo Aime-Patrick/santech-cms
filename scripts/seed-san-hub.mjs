@@ -8,6 +8,12 @@
  * and updated instead of duplicated.
  */
 
+if (process.loadEnvFile) {
+  try {
+    process.loadEnvFile();
+  } catch {}
+}
+
 const STRAPI_URL = (process.env.STRAPI_URL ?? "http://localhost:1337").replace(/\/$/, "");
 const API_TOKEN = process.env.STRAPI_API_TOKEN ?? "";
 
@@ -36,7 +42,7 @@ async function upsert(endpoint, field, record) {
   const existing = await findOne(endpoint, field, record[field]);
   const payload = { data: { ...record, publishedAt: new Date().toISOString() } };
   if (existing) {
-    await request(`/api/${endpoint}/${existing.id}`, { method: "PUT", body: JSON.stringify(payload) });
+    await request(`/api/${endpoint}/${existing.documentId}`, { method: "PUT", body: JSON.stringify(payload) });
     console.log(`Updated ${endpoint}: ${record[field]}`);
   } else {
     await request(`/api/${endpoint}`, { method: "POST", body: JSON.stringify(payload) });
@@ -59,9 +65,9 @@ const BOOKS = [
 ];
 
 const TESTIMONIALS = [
-  { name: "Aline M.", role: "SAN HUB learner", quote: "SAN HUB helped me move from learning concepts to building something people could actually use.", rating: 4.9, context: "san-hub", dateLabel: "12 Jun, 2024", sourceLabel: "Learner story", sortOrder: 1 },
-  { name: "Eric N.", role: "Innovation program participant", quote: "The practical projects and mentorship gave our team the confidence to take an idea further.", rating: 4.8, context: "san-hub", dateLabel: "29 Aug, 2024", sourceLabel: "Innovation program", sortOrder: 2 },
-  { name: "Diane U.", role: "Community partner", quote: "SAN HUB creates a useful bridge between technology skills, opportunity, and the needs of our community.", rating: 4.9, context: "san-hub", dateLabel: "14 Nov, 2024", sourceLabel: "Partner story", sortOrder: 3 },
+  { name: "Aline M.", role: "SAN HUB learner", quote: "SAN HUB helped me move from learning concepts to building something people could actually use.", rating: 5, context: "san-hub", dateLabel: "12 Jun, 2024", sourceLabel: "Learner story", sortOrder: 1 },
+  { name: "Eric N.", role: "Innovation program participant", quote: "The practical projects and mentorship gave our team the confidence to take an idea further.", rating: 5, context: "san-hub", dateLabel: "29 Aug, 2024", sourceLabel: "Innovation program", sortOrder: 2 },
+  { name: "Diane U.", role: "Community partner", quote: "SAN HUB creates a useful bridge between technology skills, opportunity, and the needs of our community.", rating: 5, context: "san-hub", dateLabel: "14 Nov, 2024", sourceLabel: "Partner story", sortOrder: 3 },
 ];
 
 const AWARDS = [
@@ -72,23 +78,23 @@ const COURSE_DETAILS = {
   "full-stack-software-engineering": {
     subtitle: "Build dependable digital products from a real problem to a working release.",
     instructor: "SAN TECH Software Engineering Team",
-    rating: 4.9,
+    rating: 5,
     reviewCount: "38 learner reviews",
-    stats: [{ label: "Course pathway", value: "4 project stages", detail: "Learn by building" }, { label: "Practical rating", value: "4.9 ★", detail: "From SAN HUB learners" }, { label: "Level", value: "Intermediate", detail: "Recommended experience" }, { label: "Schedule", value: "Flexible cohort", detail: "16 weeks to complete" }],
+    stats: [{ label: "Course pathway", value: "4 project stages", detail: "Learn by building" }, { label: "Practical rating", value: "5 ★", detail: "From SAN HUB learners" }, { label: "Level", value: "Intermediate", detail: "Recommended experience" }, { label: "Schedule", value: "Flexible cohort", detail: "16 weeks to complete" }],
   },
   "applied-ai-machine-learning": {
     subtitle: "Use data, machine learning, and responsible AI to solve practical problems.",
     instructor: "SAN TECH AI & Data Team",
-    rating: 4.8,
+    rating: 5,
     reviewCount: "31 learner reviews",
-    stats: [{ label: "Course pathway", value: "4 applied labs", detail: "Learn through experiments" }, { label: "Practical rating", value: "4.8 ★", detail: "From SAN HUB learners" }, { label: "Level", value: "All levels", detail: "Curiosity is enough to start" }, { label: "Schedule", value: "Weekend labs", detail: "12 weeks to complete" }],
+    stats: [{ label: "Course pathway", value: "4 applied labs", detail: "Learn through experiments" }, { label: "Practical rating", value: "5 ★", detail: "From SAN HUB learners" }, { label: "Level", value: "All levels", detail: "Curiosity is enough to start" }, { label: "Schedule", value: "Weekend labs", detail: "12 weeks to complete" }],
   },
   "cybersecurity-defense": {
     subtitle: "Build the habits and systems needed to protect people, information, and operations.",
     instructor: "SAN TECH Cybersecurity Team",
-    rating: 4.9,
+    rating: 5,
     reviewCount: "27 learner reviews",
-    stats: [{ label: "Course pathway", value: "3 intensive labs", detail: "Practice by scenario" }, { label: "Practical rating", value: "4.9 ★", detail: "From SAN HUB learners" }, { label: "Level", value: "Intermediate", detail: "Systems experience helps" }, { label: "Schedule", value: "Intensive labs", detail: "10 weeks to complete" }],
+    stats: [{ label: "Course pathway", value: "3 intensive labs", detail: "Practice by scenario" }, { label: "Practical rating", value: "5 ★", detail: "From SAN HUB learners" }, { label: "Level", value: "Intermediate", detail: "Systems experience helps" }, { label: "Schedule", value: "Intensive labs", detail: "10 weeks to complete" }],
   },
 };
 
@@ -96,7 +102,7 @@ for (const category of BOOK_CATEGORIES) await upsert("san-hub-book-categories", 
 
 for (const book of BOOKS) {
   const category = await findOne("san-hub-book-categories", "slug", book.category);
-  await upsert("san-hub-books", "bookId", { ...book, category: category?.id ?? undefined });
+  await upsert("san-hub-books", "bookId", { ...book, category: category?.documentId ?? undefined });
 }
 
 for (const testimonial of TESTIMONIALS) await upsert("testimonials", "name", testimonial);
@@ -108,7 +114,7 @@ for (const [itemId, detail] of Object.entries(COURSE_DETAILS)) {
     console.log(`Skipped course details; catalog item not found: ${itemId}`);
     continue;
   }
-  await request(`/api/san-hub-catalog-items/${course.id}`, {
+  await request(`/api/san-hub-catalog-items/${course.documentId}`, {
     method: "PUT",
     body: JSON.stringify({ data: { ...detail, publishedAt: new Date().toISOString() } }),
   });
