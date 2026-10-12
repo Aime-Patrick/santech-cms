@@ -18,6 +18,7 @@ const PUBLIC_PERMISSIONS: Array<{ action: string }> = [
   // Driving Change stories
   { action: 'api::driving-change-story.driving-change-story.find' },
   { action: 'api::driving-change-story.driving-change-story.findOne' },
+  { action: 'api::driving-change-topic.driving-change-topic.find' },
   // SAN HUB catalog
   { action: 'api::san-hub-catalog-item.san-hub-catalog-item.find' },
   // Tech Pulse opportunities

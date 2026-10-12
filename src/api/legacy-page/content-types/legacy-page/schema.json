@@ -1,0 +1,26 @@
+{
+  "kind": "singleType",
+  "collectionName": "legacy_pages",
+  "info": {
+    "singularName": "legacy-page",
+    "pluralName": "legacy-pages",
+    "displayName": "Our Legacy Page",
+    "description": "Editable identity, mission, vision, and company profile content for Our Legacy."
+  },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "whoWeAreBody": { "type": "text", "maxLength": 1200 },
+    "whoWeAreSecondaryBody": { "type": "text", "maxLength": 1200 },
+    "identityFacts": { "type": "json" },
+    "missionTitle": { "type": "string", "maxLength": 150 },
+    "missionTagline": { "type": "string", "maxLength": 180 },
+    "missionDescription": { "type": "text", "maxLength": 1200 },
+    "visionTitle": { "type": "string", "maxLength": 150 },
+    "visionTagline": { "type": "string", "maxLength": 180 },
+    "visionDescription": { "type": "text", "maxLength": 1200 },
+    "profileTitle": { "type": "string", "maxLength": 180 },
+    "profileDescription": { "type": "text", "maxLength": 1600 },
+    "profileFacts": { "type": "json" },
+    "impactStats": { "type": "json" }
+  }
+}

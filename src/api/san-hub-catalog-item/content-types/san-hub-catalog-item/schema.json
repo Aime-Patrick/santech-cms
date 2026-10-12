@@ -43,6 +43,17 @@
     "level": { "type": "string", "maxLength": 100 },
     "badge": { "type": "string", "maxLength": 80 },
     "href": { "type": "string", "maxLength": 500 },
+    "subtitle": { "type": "text", "maxLength": 500 },
+    "instructor": { "type": "string", "maxLength": 200 },
+    "stats": { "type": "json" },
+    "learningOutcomes": { "type": "json" },
+    "skills": { "type": "json" },
+    "tools": { "type": "json" },
+    "details": { "type": "json" },
+    "courseSeries": { "type": "json" },
+    "courseTestimonials": { "type": "json" },
+    "rating": { "type": "decimal", "min": 0, "max": 5 },
+    "reviewCount": { "type": "string", "maxLength": 100 },
     "sortOrder": { "type": "integer", "default": 0 }
   }
 }

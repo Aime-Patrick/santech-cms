@@ -1,5 +1,11 @@
 /* Keep the SAN TECH admin workspace focused on CMS operations. */
-a[href^='https://market.strapi.io'] {
+/* Hide Strapi Marketplace, including the compact icon-only navigation item. */
+a[href^='https://market.strapi.io'],
+a[href*='/marketplace' i],
+a[href*='market.strapi.io' i],
+[aria-label*='marketplace' i],
+[title*='marketplace' i],
+[data-testid*='marketplace' i] {
   display: none !important;
 }
 

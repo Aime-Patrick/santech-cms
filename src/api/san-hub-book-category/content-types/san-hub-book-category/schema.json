@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "san_hub_book_categories",
+  "info": {
+    "singularName": "san-hub-book-category",
+    "pluralName": "san-hub-book-categories",
+    "displayName": "SAN HUB Book Category",
+    "description": "Categories used to organize SAN HUB books and reading resources."
+  },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "name": { "type": "string", "required": true, "maxLength": 120 },
+    "slug": { "type": "uid", "targetField": "name", "required": true },
+    "description": { "type": "text", "maxLength": 400 },
+    "sortOrder": { "type": "integer", "default": 0 },
+    "books": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::san-hub-book.san-hub-book",
+      "mappedBy": "category"
+    }
+  }
+}

@@ -36,6 +36,15 @@
       ],
       "required": true
     },
+    "categoryLabel": {
+      "type": "string",
+      "maxLength": 100,
+      "description": "Optional display label. When empty, the frontend derives one from category."
+    },
+    "relatedSlugs": {
+      "type": "json",
+      "description": "Optional ordered list of Tech Pulse article slugs to show below this story."
+    },
     "excerpt": {
       "type": "text",
       "required": true,

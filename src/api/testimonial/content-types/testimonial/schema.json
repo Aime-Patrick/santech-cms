@@ -14,6 +14,14 @@
     "quote": { "type": "text", "required": true, "maxLength": 800 },
     "rating": { "type": "integer", "min": 1, "max": 5, "default": 5 },
     "avatar": { "type": "media", "multiple": false, "required": false, "allowedTypes": ["images"] },
+    "context": {
+      "type": "enumeration",
+      "enum": ["e-visitors", "san-hub", "general", "course"],
+      "default": "e-visitors"
+    },
+    "courseId": { "type": "string", "maxLength": 150 },
+    "dateLabel": { "type": "string", "maxLength": 80 },
+    "sourceLabel": { "type": "string", "maxLength": 120 },
     "sortOrder": { "type": "integer", "default": 0 }
   }
 }

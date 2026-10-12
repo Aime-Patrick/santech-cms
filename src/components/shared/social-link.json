@@ -1,0 +1,33 @@
+{
+  "collectionName": "components_shared_social_links",
+  "info": {
+    "displayName": "Social Link",
+    "description": "A public social or community profile link."
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true,
+      "maxLength": 80
+    },
+    "platform": {
+      "type": "enumeration",
+      "enum": ["facebook", "instagram", "linkedin", "x", "youtube", "whatsapp", "other"],
+      "default": "other"
+    },
+    "url": {
+      "type": "string",
+      "required": true,
+      "maxLength": 500
+    },
+    "iconName": {
+      "type": "string",
+      "maxLength": 80
+    },
+    "sortOrder": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}

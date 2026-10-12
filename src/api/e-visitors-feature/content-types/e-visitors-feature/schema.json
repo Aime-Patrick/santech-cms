@@ -14,7 +14,7 @@
     "title": { "type": "string", "required": true, "maxLength": 255 },
     "description": { "type": "text", "required": true, "maxLength": 500 },
     "panel": { "type": "string", "maxLength": 150 },
-    "status": { "type": "string", "maxLength": 100 },
+    "displayStatus": { "type": "string", "maxLength": 100 },
     "iconName": { "type": "string", "maxLength": 80, "default": "BarChart3" },
     "screen": { "type": "media", "multiple": false, "required": false, "allowedTypes": ["images"] },
     "details": { "type": "json" },

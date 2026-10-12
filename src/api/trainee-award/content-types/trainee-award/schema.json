@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "trainee_awards",
+  "info": {
+    "singularName": "trainee-award",
+    "pluralName": "trainee-awards",
+    "displayName": "Trainee Award",
+    "description": "Recognition awarded to SAN HUB trainees."
+  },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "name": { "type": "string", "required": true, "maxLength": 150 },
+    "year": { "type": "string", "required": true, "maxLength": 10 },
+    "title": { "type": "string", "required": true, "maxLength": 150 },
+    "description": { "type": "text", "required": true, "maxLength": 600 },
+    "image": { "type": "media", "multiple": false, "required": false, "allowedTypes": ["images"] },
+    "category": {
+      "type": "enumeration",
+      "enum": ["best-performer", "learner-recognition", "other"],
+      "default": "best-performer"
+    },
+    "featured": { "type": "boolean", "default": true },
+    "sortOrder": { "type": "integer", "default": 0 }
+  }
+}

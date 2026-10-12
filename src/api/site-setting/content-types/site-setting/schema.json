@@ -1,0 +1,89 @@
+{
+  "kind": "singleType",
+  "collectionName": "site_settings",
+  "info": {
+    "singularName": "site-setting",
+    "pluralName": "site-settings",
+    "displayName": "Site Settings",
+    "description": "Global SAN TECH website settings, media, links, and language configuration."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "siteName": {
+      "type": "string",
+      "required": true,
+      "default": "SAN TECH",
+      "maxLength": 100
+    },
+    "siteTitle": {
+      "type": "string",
+      "required": true,
+      "default": "SAN TECH | Technology. Innovation. Impact.",
+      "maxLength": 255
+    },
+    "siteDescription": {
+      "type": "text",
+      "maxLength": 500
+    },
+    "defaultLanguage": {
+      "type": "enumeration",
+      "enum": ["en", "rw"],
+      "default": "en"
+    },
+    "supportedLanguages": {
+      "type": "json"
+    },
+    "calendlyUrl": {
+      "type": "string",
+      "maxLength": 500
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "favicon": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "homepageVideo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["videos"]
+    },
+    "homepageVideoPoster": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "eVisitorsVideoPoster": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "companyProfilePdf": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["files"]
+    },
+    "socialLinks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.social-link"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    }
+  }
+}

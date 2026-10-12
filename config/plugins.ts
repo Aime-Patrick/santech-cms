@@ -23,17 +23,30 @@ const deniedTypes = [
   'application/x-mach-binary',
 ];
 
-const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Plugin => ({
-  'users-permissions': {
-    config: {
-      jwtManagement: 'refresh',
-      sessions: {
-        httpOnly: true,
+const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Plugin => {
+  const resendApiKey = env('RESEND_API_KEY', '').trim();
+
+  return {
+    email: {
+      config: {
+        provider: resendApiKey ? '@3xweb/strapi-provider-email-resend' : 'sendmail',
+        ...(resendApiKey ? { providerOptions: { apiKey: resendApiKey } } : {}),
+        settings: {
+          defaultFrom: env('EMAIL_FROM', 'SAN TECH <noreply@santechconnect.com>'),
+          defaultReplyTo: env('EMAIL_REPLY_TO', 'info@santechconnect.com'),
+        },
       },
     },
-  },
-  upload: {
-    config: {
+    'users-permissions': {
+      config: {
+        jwtManagement: 'refresh',
+        sessions: {
+          httpOnly: true,
+        },
+      },
+    },
+    upload: {
+      config: {
       // ── Cloudinary upload provider ─────────────────────────────────────────
       provider: 'cloudinary',
       providerOptions: {
@@ -62,8 +75,9 @@ const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Plugin =>
         allowedTypes: allowedMediaTypes,
         deniedTypes,
       },
+      },
     },
-  },
-});
+  };
+};
 
 export default config;

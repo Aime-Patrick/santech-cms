@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "driving_change_topics",
+  "info": {
+    "singularName": "driving-change-topic",
+    "pluralName": "driving-change-topics",
+    "displayName": "Driving Change Topic",
+    "description": "Section categories shown in the Driving Change browser."
+  },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "topicId": { "type": "uid", "targetField": "label", "required": true },
+    "sectionKey": { "type": "enumeration", "enum": ["impact", "career"], "required": true },
+    "label": { "type": "string", "required": true, "maxLength": 120 },
+    "subtitle": { "type": "string", "required": true, "maxLength": 255 },
+    "sortOrder": { "type": "integer", "default": 0 }
+  }
+}

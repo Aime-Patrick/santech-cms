@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "san_hub_books",
+  "info": {
+    "singularName": "san-hub-book",
+    "pluralName": "san-hub-books",
+    "displayName": "SAN HUB Book",
+    "description": "Books and digital reading resources shown in the SAN HUB library."
+  },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "title": { "type": "string", "required": true, "maxLength": 255 },
+    "bookId": { "type": "uid", "targetField": "title", "required": true },
+    "description": { "type": "text", "required": true, "maxLength": 600 },
+    "category": { "type": "relation", "relation": "manyToOne", "target": "api::san-hub-book-category.san-hub-book-category", "inversedBy": "books" },
+    "coverImage": { "type": "media", "multiple": false, "required": false, "allowedTypes": ["images"] },
+    "file": { "type": "media", "multiple": false, "required": false, "allowedTypes": ["files"] },
+    "readerUrl": { "type": "string", "maxLength": 1000 },
+    "coverTitle": { "type": "string", "maxLength": 150 },
+    "coverSubtitle": { "type": "string", "maxLength": 250 },
+    "accent": { "type": "string", "maxLength": 30, "default": "#0a1f44" },
+    "coverInk": { "type": "string", "maxLength": 30, "default": "#e8fbff" },
+    "pageLabel": { "type": "string", "maxLength": 20 },
+    "sortOrder": { "type": "integer", "default": 0 }
+  }
+}

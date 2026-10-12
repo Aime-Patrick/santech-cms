@@ -13,6 +13,13 @@
     "label": { "type": "string", "required": true, "maxLength": 150 },
     "description": { "type": "text", "required": true, "maxLength": 600 },
     "iconName": { "type": "string", "maxLength": 80, "default": "Code2" },
+    "coreFeatures": { "type": "json" },
+    "detailBody": { "type": "blocks" },
+    "mediaKind": { "type": "enumeration", "enum": ["image", "video"], "default": "image" },
+    "mediaImage": { "type": "media", "multiple": false, "required": false, "allowedTypes": ["images"] },
+    "mediaImages": { "type": "media", "multiple": true, "required": false, "allowedTypes": ["images"] },
+    "mediaAlt": { "type": "string", "maxLength": 255 },
+    "seo": { "type": "component", "repeatable": false, "component": "shared.seo" },
     "sortOrder": { "type": "integer", "default": 0 }
   }
 }

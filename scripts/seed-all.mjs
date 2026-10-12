@@ -131,7 +131,6 @@ const PARTNER_BRANDS = [
   { label: "H&M Group",           href: "https://handmgroup.rw/",       showLabel: false, isGovernment: false, sortOrder: 3 },
   { label: "Eva Wellness Spa",    href: "https://www.evawellnessspa.com/", showLabel: false, isGovernment: false, sortOrder: 4 },
   { label: "BNR",                 href: "https://www.bnr.rw/",          showLabel: true,  isGovernment: false, sortOrder: 5 },
-  { label: "MINICOM",             href: "https://minicom.gov.rw/",      showLabel: false, isGovernment: true,  sortOrder: 6 },
 ];
 
 async function seedPartnerBrands() {

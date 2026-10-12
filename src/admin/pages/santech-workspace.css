@@ -1,0 +1,156 @@
+.santech-workspace {
+  min-height: 100%;
+  padding: 32px clamp(20px, 4vw, 48px) 48px;
+  background: #f6f6f9;
+  color: #32324d;
+}
+
+.santech-workspace__hero {
+  max-width: 1180px;
+  margin: 0 auto 28px;
+  padding: 0 0 24px;
+  border-bottom: 1px solid #dcdce4;
+}
+
+.santech-workspace__eyebrow {
+  margin: 0;
+  color: #666687;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.santech-workspace__hero h1 {
+  margin: 10px 0 0;
+  color: #32324d;
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.santech-workspace__intro {
+  max-width: 680px;
+  margin: 8px 0 0;
+  color: #666687;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.santech-workspace__mark {
+  display: none;
+}
+
+.santech-workspace__groups {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.santech-workspace__group {
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid #dcdce4;
+  border-radius: 6px;
+  background: #ffffff;
+}
+
+.santech-workspace__group-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #eaeaef;
+}
+
+.santech-workspace__number {
+  min-width: 24px;
+  margin-top: 2px;
+  color: #8e8ea9;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.santech-workspace__group h2 {
+  margin: 0;
+  color: #32324d;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.santech-workspace__group-header p {
+  margin: 5px 0 0;
+  color: #666687;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.santech-workspace__links {
+  margin-top: 4px;
+}
+
+.santech-workspace__link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-width: 0;
+  padding: 13px 2px;
+  border-bottom: 1px solid #eaeaef;
+  color: #32324d;
+  text-decoration: none;
+  transition: background-color 140ms ease, color 140ms ease;
+}
+
+.santech-workspace__link:last-child {
+  border-bottom: 0;
+}
+
+.santech-workspace__link:hover,
+.santech-workspace__link:focus-visible {
+  color: #4945ff;
+  outline: none;
+}
+
+.santech-workspace__link strong,
+.santech-workspace__link small {
+  display: block;
+}
+
+.santech-workspace__link strong {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.santech-workspace__link small {
+  margin-top: 3px;
+  color: #666687;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.santech-workspace__link svg {
+  flex: 0 0 auto;
+  color: #8e8ea9;
+  transition: color 140ms ease, transform 140ms ease;
+}
+
+.santech-workspace__link:hover svg,
+.santech-workspace__link:focus-visible svg {
+  color: #4945ff;
+  transform: translateX(2px);
+}
+
+@media (max-width: 760px) {
+  .santech-workspace {
+    padding: 24px 16px 36px;
+  }
+
+  .santech-workspace__groups {
+    grid-template-columns: 1fr;
+  }
+}

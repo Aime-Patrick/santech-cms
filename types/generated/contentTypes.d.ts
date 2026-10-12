@@ -542,6 +542,32 @@ export interface ApiContactInfoContactInfo extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiDrivingChangeTopicDrivingChangeTopic
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'driving_change_topics';
+  info: {
+    description: 'Section categories shown in the Driving Change browser.';
+    displayName: 'Driving Change Topic';
+    pluralName: 'driving-change-topics';
+    singularName: 'driving-change-topic';
+  };
+  options: { draftAndPublish: true };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> & Schema.Attribute.Private;
+    label: Schema.Attribute.String & Schema.Attribute.Required & Schema.Attribute.SetMinMaxLength<{ maxLength: 120 }>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::driving-change-topic.driving-change-topic'> & Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    sectionKey: Schema.Attribute.Enumeration<['impact', 'career']> & Schema.Attribute.Required;
+    sortOrder: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    subtitle: Schema.Attribute.String & Schema.Attribute.Required & Schema.Attribute.SetMinMaxLength<{ maxLength: 255 }>;
+    topicId: Schema.Attribute.UID<'label'> & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> & Schema.Attribute.Private;
+  };
+}
+
 export interface ApiDrivingChangeStoryDrivingChangeStory
   extends Struct.CollectionTypeSchema {
   collectionName: 'driving_change_stories';
@@ -644,6 +670,10 @@ export interface ApiEVisitorsFeatureEVisitorsFeature
         maxLength: 500;
       }>;
     details: Schema.Attribute.JSON;
+    displayStatus: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
     iconName: Schema.Attribute.String &
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 80;
@@ -672,10 +702,6 @@ export interface ApiEVisitorsFeatureEVisitorsFeature
     publishedAt: Schema.Attribute.DateTime;
     screen: Schema.Attribute.Media<'images'>;
     sortOrder: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
-    status: Schema.Attribute.String &
-      Schema.Attribute.SetMinMaxLength<{
-        maxLength: 100;
-      }>;
     title: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
@@ -1504,6 +1530,10 @@ export interface ApiTechPulseArticleTechPulseArticle
       ]
     > &
       Schema.Attribute.Required;
+    categoryLabel: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
     coverImage: Schema.Attribute.Media<'images'>;
     coverImageAlt: Schema.Attribute.String &
       Schema.Attribute.SetMinMaxLength<{
@@ -1530,6 +1560,7 @@ export interface ApiTechPulseArticleTechPulseArticle
         maxLength: 30;
       }> &
       Schema.Attribute.DefaultTo<'3 min read'>;
+    relatedSlugs: Schema.Attribute.JSON;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     title: Schema.Attribute.String &
       Schema.Attribute.Required &
@@ -2156,6 +2187,7 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::company-value.company-value': ApiCompanyValueCompanyValue;
       'api::contact-info.contact-info': ApiContactInfoContactInfo;
+      'api::driving-change-topic.driving-change-topic': ApiDrivingChangeTopicDrivingChangeTopic;
       'api::driving-change-story.driving-change-story': ApiDrivingChangeStoryDrivingChangeStory;
       'api::e-visitors-feature.e-visitors-feature': ApiEVisitorsFeatureEVisitorsFeature;
       'api::faq-item.faq-item': ApiFaqItemFaqItem;

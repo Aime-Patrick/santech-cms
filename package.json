@@ -13,10 +13,16 @@
     "upgrade": "npx @strapi/upgrade latest",
     "upgrade:dry": "npx @strapi/upgrade latest --dry",
     "seed:tech-pulse": "node scripts/seed-tech-pulse.mjs",
-    "seed:all": "node scripts/seed-all.mjs",
-    "seed:content": "node scripts/seed-content.mjs"
+    "seed:all": "node scripts/seed-everything.mjs",
+    "seed:content": "node scripts/seed-content.mjs",
+    "seed:foundation": "node scripts/seed-foundation.mjs",
+    "seed:san-hub": "node scripts/seed-san-hub.mjs",
+    "seed:legacy": "node scripts/seed-legacy.mjs",
+    "seed:driving-change-topics": "node scripts/seed-driving-change-topics.mjs",
+    "seed:standards": "node scripts/seed-standards.mjs"
   },
   "dependencies": {
+    "@3xweb/strapi-provider-email-resend": "^1.2.1",
     "@strapi/database": "5.57.0",
     "@strapi/plugin-users-permissions": "5.57.0",
     "@strapi/provider-upload-cloudinary": "^5.57.0",
