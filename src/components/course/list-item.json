@@ -1,0 +1,8 @@
+{
+  "collectionName": "components_course_list_items",
+  "info": { "displayName": "Course list item", "icon": "list" },
+  "options": {},
+  "attributes": {
+    "value": { "type": "string", "required": true, "maxLength": 240 }
+  }
+}
