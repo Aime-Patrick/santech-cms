@@ -66,7 +66,7 @@ const COURSE_CATEGORIES = [
   { name: "Digital transformation", slug: "digital-transformation", sortOrder: 6 },
 ];
 
-const COURSE_CATEGORY_BY_ITEM = {
+const COURSE_CATEGORY_BY_SLUG = {
   "full-stack-software-engineering": "web-development",
   "applied-ai-machine-learning": "artificial-intelligence",
   "cybersecurity-defense": "cybersecurity",
@@ -130,8 +130,8 @@ const toSlug = (value) => value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replac
 for (const category of BOOK_CATEGORIES) await upsert("san-hub-book-categories", "slug", category);
 for (const category of COURSE_CATEGORIES) await upsert("course-categories", "slug", { ...category, isActive: true });
 
-for (const [itemId, categorySlug] of Object.entries(COURSE_CATEGORY_BY_ITEM)) {
-  const course = await findOne("san-hub-catalog-items", "itemId", itemId);
+for (const [courseSlug, categorySlug] of Object.entries(COURSE_CATEGORY_BY_SLUG)) {
+  const course = await findOne("san-hub-catalog-items", "slug", courseSlug);
   const category = await findOne("course-categories", "slug", categorySlug);
   if (!course || !category) continue;
   await request(`/api/san-hub-catalog-items/${course.documentId}`, {
@@ -148,31 +148,31 @@ for (const book of BOOKS) {
 for (const testimonial of TESTIMONIALS) await upsert("testimonials", "name", testimonial);
 for (const award of AWARDS) await upsert("trainee-awards", "name", award);
 
-for (const [itemId, detail] of Object.entries(COURSE_DETAILS)) {
-  const course = await findOne("san-hub-catalog-items", "itemId", itemId);
+for (const [courseSlug, detail] of Object.entries(COURSE_DETAILS)) {
+  const course = await findOne("san-hub-catalog-items", "slug", courseSlug);
   if (!course) {
-    console.log(`Skipped course details; catalog item not found: ${itemId}`);
+    console.log(`Skipped course details; catalog item not found: ${courseSlug}`);
     continue;
   }
   await request(`/api/san-hub-catalog-items/${course.documentId}`, {
     method: "PUT",
     body: JSON.stringify({ data: { ...detail, publishedAt: new Date().toISOString() } }),
   });
-  console.log(`Updated course details: ${itemId}`);
+  console.log(`Updated course details: ${courseSlug}`);
 }
 
-for (const itemId of Object.keys(COURSE_SKILLS)) {
-  const course = await findOne("san-hub-catalog-items", "itemId", itemId);
+for (const courseSlug of Object.keys(COURSE_SKILLS)) {
+  const course = await findOne("san-hub-catalog-items", "slug", courseSlug);
   if (!course) continue;
 
   const skillRecords = [];
-  for (const [sortOrder, name] of COURSE_SKILLS[itemId].entries()) {
+  for (const [sortOrder, name] of COURSE_SKILLS[courseSlug].entries()) {
     await upsert("course-skills", "slug", { name, slug: toSlug(name), category: "Course skill", sortOrder });
     skillRecords.push(await findOne("course-skills", "slug", toSlug(name)));
   }
 
   const toolRecords = [];
-  for (const [sortOrder, name] of COURSE_TOOLS[itemId].entries()) {
+  for (const [sortOrder, name] of COURSE_TOOLS[courseSlug].entries()) {
     await upsert("course-tools", "slug", { name, slug: toSlug(name), category: "Course tool", sortOrder });
     toolRecords.push(await findOne("course-tools", "slug", toSlug(name)));
   }
@@ -186,7 +186,7 @@ for (const itemId of Object.keys(COURSE_SKILLS)) {
       },
     }),
   });
-  console.log(`Linked skills and tools: ${itemId}`);
+  console.log(`Linked skills and tools: ${courseSlug}`);
 }
 
 console.log("SAN HUB Phase 3 seed complete.");

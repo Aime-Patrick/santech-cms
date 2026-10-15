@@ -1850,7 +1850,6 @@ export interface ApiSanHubCatalogItemSanHubCatalogItem
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 200;
       }>;
-    itemId: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     learningOutcomes: Schema.Attribute.Component<'course.list-item', true>;
     level: Schema.Attribute.String &
       Schema.Attribute.SetMinMaxLength<{
@@ -1883,6 +1882,7 @@ export interface ApiSanHubCatalogItemSanHubCatalogItem
       'manyToMany',
       'api::course-skill.course-skill'
     >;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     sortOrder: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
     stats: Schema.Attribute.Component<'course.stat', true>;
     subtitle: Schema.Attribute.Text &

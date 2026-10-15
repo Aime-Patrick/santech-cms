@@ -10,7 +10,7 @@
   "options": { "draftAndPublish": true },
   "attributes": {
     "title": { "type": "string", "required": true, "maxLength": 255 },
-    "itemId": { "type": "uid", "targetField": "title", "required": true },
+    "slug": { "type": "uid", "targetField": "title", "required": true },
     "category": {
       "type": "enumeration",
       "enum": [
