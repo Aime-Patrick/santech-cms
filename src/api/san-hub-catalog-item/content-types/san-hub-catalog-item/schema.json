@@ -42,7 +42,6 @@
     "duration": { "type": "string", "maxLength": 100 },
     "level": { "type": "string", "maxLength": 100 },
     "badge": { "type": "string", "maxLength": 80 },
-    "href": { "type": "string", "maxLength": 500 },
     "subtitle": { "type": "text", "maxLength": 500 },
     "instructor": { "type": "string", "maxLength": 200 },
     "stats": { "type": "json" },

@@ -1556,10 +1556,6 @@ export interface ApiSanHubCatalogItemSanHubCatalogItem
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 100;
       }>;
-    href: Schema.Attribute.String &
-      Schema.Attribute.SetMinMaxLength<{
-        maxLength: 500;
-      }>;
     image: Schema.Attribute.Media<'images'>;
     instructor: Schema.Attribute.String &
       Schema.Attribute.SetMinMaxLength<{
