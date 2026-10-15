@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_course_details",
+  "info": { "displayName": "Course detail", "icon": "information" },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string", "required": true, "maxLength": 120 },
+    "detail": { "type": "text", "required": true, "maxLength": 400 },
+    "icon": {
+      "type": "enumeration",
+      "enum": ["certificate", "language", "schedule", "access"],
+      "default": "access",
+      "required": true
+    }
+  }
+}

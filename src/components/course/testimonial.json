@@ -1,0 +1,10 @@
+{
+  "collectionName": "components_course_testimonials",
+  "info": { "displayName": "Course testimonial", "icon": "quote" },
+  "options": {},
+  "attributes": {
+    "initials": { "type": "string", "required": true, "maxLength": 4 },
+    "name": { "type": "string", "required": true, "maxLength": 120 },
+    "quote": { "type": "text", "required": true, "maxLength": 600 }
+  }
+}

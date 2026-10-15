@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "course_skills",
+  "info": {
+    "singularName": "course-skill",
+    "pluralName": "course-skills",
+    "displayName": "Course Skill",
+    "description": "Reusable skills that can be selected for SAN HUB courses."
+  },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "name": { "type": "string", "required": true, "maxLength": 120 },
+    "slug": { "type": "uid", "targetField": "name", "required": true },
+    "category": { "type": "string", "maxLength": 80 },
+    "description": { "type": "text", "maxLength": 300 },
+    "sortOrder": { "type": "integer", "default": 0 },
+    "courses": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::san-hub-catalog-item.san-hub-catalog-item",
+      "mappedBy": "skills"
+    }
+  }
+}

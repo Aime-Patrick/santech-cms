@@ -1,0 +1,10 @@
+{
+  "collectionName": "components_course_stats",
+  "info": { "displayName": "Course stat", "icon": "chart-bar" },
+  "options": {},
+  "attributes": {
+    "label": { "type": "string", "required": true, "maxLength": 80 },
+    "value": { "type": "string", "required": true, "maxLength": 100 },
+    "detail": { "type": "string", "required": true, "maxLength": 160 }
+  }
+}

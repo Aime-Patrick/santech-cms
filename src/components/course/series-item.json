@@ -1,0 +1,10 @@
+{
+  "collectionName": "components_course_series_items",
+  "info": { "displayName": "Course journey module", "icon": "bulletList" },
+  "options": {},
+  "attributes": {
+    "title": { "type": "string", "required": true, "maxLength": 140 },
+    "description": { "type": "text", "required": true, "maxLength": 500 },
+    "duration": { "type": "string", "required": true, "maxLength": 80 }
+  }
+}
