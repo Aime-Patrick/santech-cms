@@ -11,7 +11,11 @@
   "attributes": {
     "label": { "type": "string", "required": true, "maxLength": 150 },
     "description": { "type": "text", "required": true, "maxLength": 400 },
-    "iconName": { "type": "string", "maxLength": 80, "default": "Code2" },
+    "iconName": {
+      "type": "enumeration",
+      "enum": ["AlertCircle", "Award", "BarChart3", "BadgeCheck", "BrainCircuit", "BriefcaseBusiness", "Building2", "CalendarDays", "CheckCircle2", "Cloud", "CloudCog", "Code2", "Compass", "Cpu", "Database", "Eye", "FileText", "FlaskConical", "Globe2", "GraduationCap", "Handshake", "HeartHandshake", "Lightbulb", "LockKeyhole", "Mail", "MapPin", "Network", "Radar", "Radio", "Rocket", "ScanLine", "ShieldCheck", "Smartphone", "Target", "Truck", "Users", "Workflow", "Wrench"],
+      "default": "Code2"
+    },
     "sortOrder": { "type": "integer", "default": 0 }
   }
 }

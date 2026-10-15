@@ -22,8 +22,8 @@
       "maxLength": 500
     },
     "iconName": {
-      "type": "string",
-      "maxLength": 80
+      "type": "enumeration",
+      "enum": ["AlertCircle", "Award", "BarChart3", "BadgeCheck", "BrainCircuit", "BriefcaseBusiness", "Building2", "CalendarDays", "CheckCircle2", "Cloud", "CloudCog", "Code2", "Compass", "Cpu", "Database", "Eye", "FileText", "FlaskConical", "Globe2", "GraduationCap", "Handshake", "HeartHandshake", "Lightbulb", "LockKeyhole", "Mail", "MapPin", "Network", "Radar", "Radio", "Rocket", "ScanLine", "ShieldCheck", "Smartphone", "Target", "Truck", "Users", "Workflow", "Wrench"]
     },
     "sortOrder": {
       "type": "integer",

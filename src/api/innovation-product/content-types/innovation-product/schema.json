@@ -21,11 +21,11 @@
       "enum": ["image", "video"],
       "default": "image"
     },
-    "mediaImage": { "type": "media", "multiple": false, "required": false, "allowedTypes": ["images"] },
-    "mediaImages": { "type": "media", "multiple": true, "required": false, "allowedTypes": ["images"] },
+    "mediaImage": { "type": "media", "multiple": false, "required": false, "allowedTypes": ["images"], "description": "Primary image shown in the product overview." },
+    "mediaImages": { "type": "media", "multiple": true, "required": false, "allowedTypes": ["images"], "description": "Optional additional images used for the product gallery or slideshow." },
     "mediaAlt": { "type": "string", "maxLength": 255 },
-    "detailImage": { "type": "media", "multiple": false, "required": false, "allowedTypes": ["images"] },
-    "detailImages": { "type": "media", "multiple": true, "required": false, "allowedTypes": ["images"] },
+    "detailImage": { "type": "media", "multiple": false, "required": false, "allowedTypes": ["images"], "description": "Primary image shown on the product detail page." },
+    "detailImages": { "type": "media", "multiple": true, "required": false, "allowedTypes": ["images"], "description": "Optional additional images used on the product detail page." },
     "seo": { "type": "component", "repeatable": false, "component": "shared.seo" },
     "sortOrder": { "type": "integer", "default": 0 }
   }

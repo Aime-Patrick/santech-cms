@@ -76,6 +76,18 @@ export default {
 
       applySanTechBranding();
 
+      // Strapi updates the document title when navigating between entries. Keep
+      // that route title branded so the browser tab never falls back to
+      // "Strapi Admin" or appends "| Strapi".
+      if (document.head) {
+        const adminTitleObserver = new MutationObserver(applySanTechBranding);
+        adminTitleObserver.observe(document.head, {
+          childList: true,
+          subtree: true,
+          characterData: true,
+        });
+      }
+
       // Remove Strapi's project-plan details card from the administrator view.
       // The card is rendered by the core admin UI, so its markup is not available
       // through the application config. Keep this observer narrowly scoped to the

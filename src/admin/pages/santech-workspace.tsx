@@ -1,4 +1,6 @@
 import { ArrowRight, Layout } from '@strapi/icons';
+import { useFetchClient } from '@strapi/strapi/admin';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './santech-workspace.css';
 
@@ -105,6 +107,22 @@ function collectionPath(link: CollectionLink) {
 }
 
 export default function SantechWorkspace() {
+  const { post } = useFetchClient();
+  const [openingPlatform, setOpeningPlatform] = useState(false);
+  const [ssoError, setSsoError] = useState('');
+
+  async function openPlatform() {
+    setOpeningPlatform(true);
+    setSsoError('');
+    try {
+      const response = await post('/api/platform-sso/start');
+      window.location.assign(response.data.redirectUrl);
+    } catch {
+      setSsoError('Platform access is not configured for this CMS account.');
+      setOpeningPlatform(false);
+    }
+  }
+
   return (
     <main className="santech-workspace">
       <header className="santech-workspace__hero">
@@ -115,7 +133,7 @@ export default function SantechWorkspace() {
             Find every website area and its content in one organized place. Each shortcut opens the standard Strapi editor.
           </p>
         </div>
-        <div className="santech-workspace__mark" aria-hidden="true"><Layout width="24" height="24" /></div>
+        <div className="santech-workspace__hero-actions"><button type="button" className="santech-workspace__platform-button" onClick={openPlatform} disabled={openingPlatform}>{openingPlatform ? 'Opening platform…' : 'Open SAN TECH Platform'} <ArrowRight width="16" height="16" aria-hidden="true" /></button>{ssoError ? <small className="santech-workspace__error">{ssoError}</small> : null}<div className="santech-workspace__mark" aria-hidden="true"><Layout width="24" height="24" /></div></div>
       </header>
 
       <div className="santech-workspace__groups">

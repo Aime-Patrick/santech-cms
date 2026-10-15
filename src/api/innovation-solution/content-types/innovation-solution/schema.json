@@ -13,12 +13,16 @@
     "label": { "type": "string", "required": true, "maxLength": 150 },
     "description": { "type": "text", "required": true, "maxLength": 600 },
     "subItems": { "type": "json" },
-    "iconName": { "type": "string", "maxLength": 80, "default": "Globe2" },
+    "iconName": {
+      "type": "enumeration",
+      "enum": ["AlertCircle", "Award", "BarChart3", "BadgeCheck", "BrainCircuit", "BriefcaseBusiness", "Building2", "CalendarDays", "CheckCircle2", "Cloud", "CloudCog", "Code2", "Compass", "Cpu", "Database", "Eye", "FileText", "FlaskConical", "Globe2", "GraduationCap", "Handshake", "HeartHandshake", "Lightbulb", "LockKeyhole", "Mail", "MapPin", "Network", "Radar", "Radio", "Rocket", "ScanLine", "ShieldCheck", "Smartphone", "Target", "Truck", "Users", "Workflow", "Wrench"],
+      "default": "Globe2"
+    },
     "coreFeatures": { "type": "json" },
     "detailBody": { "type": "blocks" },
     "mediaKind": { "type": "enumeration", "enum": ["image", "video"], "default": "image" },
-    "mediaImage": { "type": "media", "multiple": false, "required": false, "allowedTypes": ["images"] },
-    "mediaImages": { "type": "media", "multiple": true, "required": false, "allowedTypes": ["images"] },
+    "mediaImage": { "type": "media", "multiple": false, "required": false, "allowedTypes": ["images"], "description": "Primary image shown in the solution overview." },
+    "mediaImages": { "type": "media", "multiple": true, "required": false, "allowedTypes": ["images"], "description": "Optional additional images used for the solution gallery or slideshow." },
     "mediaAlt": { "type": "string", "maxLength": 255 },
     "seo": { "type": "component", "repeatable": false, "component": "shared.seo" },
     "sortOrder": { "type": "integer", "default": 0 }

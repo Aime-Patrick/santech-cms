@@ -15,7 +15,11 @@
     "description": { "type": "text", "required": true, "maxLength": 500 },
     "panel": { "type": "string", "maxLength": 150 },
     "displayStatus": { "type": "string", "maxLength": 100 },
-    "iconName": { "type": "string", "maxLength": 80, "default": "BarChart3" },
+    "iconName": {
+      "type": "enumeration",
+      "enum": ["AlertCircle", "Award", "BarChart3", "BadgeCheck", "BrainCircuit", "BriefcaseBusiness", "Building2", "CalendarDays", "CheckCircle2", "Cloud", "CloudCog", "Code2", "Compass", "Cpu", "Database", "Eye", "FileText", "FlaskConical", "Globe2", "GraduationCap", "Handshake", "HeartHandshake", "Lightbulb", "LockKeyhole", "Mail", "MapPin", "Network", "Radar", "Radio", "Rocket", "ScanLine", "ShieldCheck", "Smartphone", "Target", "Truck", "Users", "Workflow", "Wrench"],
+      "default": "BarChart3"
+    },
     "screen": { "type": "media", "multiple": false, "required": false, "allowedTypes": ["images"] },
     "details": { "type": "json" },
     "sortOrder": { "type": "integer", "default": 0 }

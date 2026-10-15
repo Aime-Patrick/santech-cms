@@ -54,6 +54,9 @@ const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Plugin =>
         api_key:    env('CLOUDINARY_API_KEY'),
         api_secret: env('CLOUDINARY_API_SECRET'),
       },
+      // Keep Strapi's request limit above the size of PDFs and media sent to
+      // Cloudinary. The provider still enforces Cloudinary's own account limits.
+      sizeLimit: 256 * 1024 * 1024,
       actionOptions: {
         upload: {
           folder: env('CLOUDINARY_FOLDER', 'santech/uploads'),
