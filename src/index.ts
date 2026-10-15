@@ -21,6 +21,7 @@ const PUBLIC_PERMISSIONS: Array<{ action: string }> = [
   { action: 'api::driving-change-topic.driving-change-topic.find' },
   // SAN HUB catalog
   { action: 'api::san-hub-catalog-item.san-hub-catalog-item.find' },
+  { action: 'api::course-category.course-category.find' },
   // Tech Pulse opportunities
   { action: 'api::opportunity.opportunity.find' },
   // Our Legacy — recognition

@@ -24,16 +24,11 @@
       ],
       "required": true
     },
-    "focus": {
-      "type": "enumeration",
-      "enum": [
-        "Web development",
-        "Artificial intelligence",
-        "Cybersecurity",
-        "IoT & connected devices",
-        "Embedded technology",
-        "Digital transformation"
-      ]
+    "courseCategory": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::course-category.course-category",
+      "inversedBy": "catalogItems"
     },
     "provider": { "type": "string", "maxLength": 150 },
     "description": { "type": "text", "required": true, "maxLength": 500 },
@@ -44,13 +39,13 @@
     "badge": { "type": "string", "maxLength": 80 },
     "subtitle": { "type": "text", "maxLength": 500 },
     "instructor": { "type": "string", "maxLength": 200 },
-    "stats": { "type": "json" },
-    "learningOutcomes": { "type": "json" },
-    "skills": { "type": "json" },
-    "tools": { "type": "json" },
-    "details": { "type": "json" },
-    "courseSeries": { "type": "json" },
-    "courseTestimonials": { "type": "json" },
+    "stats": { "type": "component", "repeatable": true, "component": "course.stat" },
+    "learningOutcomes": { "type": "component", "repeatable": true, "component": "course.list-item" },
+    "skills": { "type": "relation", "relation": "manyToMany", "target": "api::course-skill.course-skill", "inversedBy": "courses" },
+    "tools": { "type": "relation", "relation": "manyToMany", "target": "api::course-tool.course-tool", "inversedBy": "courses" },
+    "details": { "type": "component", "repeatable": true, "component": "course.detail" },
+    "courseSeries": { "type": "component", "repeatable": true, "component": "course.series-item" },
+    "courseTestimonials": { "type": "component", "repeatable": true, "component": "course.testimonial" },
     "rating": { "type": "decimal", "min": 0, "max": 5 },
     "reviewCount": { "type": "string", "maxLength": 100 },
     "sortOrder": { "type": "integer", "default": 0 }

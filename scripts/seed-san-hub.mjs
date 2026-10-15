@@ -57,6 +57,21 @@ const BOOK_CATEGORIES = [
   { name: "Community and access", slug: "community-and-access", description: "Resources about connected communities and digital opportunity." },
 ];
 
+const COURSE_CATEGORIES = [
+  { name: "Web development", slug: "web-development", sortOrder: 1 },
+  { name: "Artificial intelligence", slug: "artificial-intelligence", sortOrder: 2 },
+  { name: "Cybersecurity", slug: "cybersecurity", sortOrder: 3 },
+  { name: "IoT & connected devices", slug: "iot-connected-devices", sortOrder: 4 },
+  { name: "Embedded technology", slug: "embedded-technology", sortOrder: 5 },
+  { name: "Digital transformation", slug: "digital-transformation", sortOrder: 6 },
+];
+
+const COURSE_CATEGORY_BY_ITEM = {
+  "full-stack-software-engineering": "web-development",
+  "applied-ai-machine-learning": "artificial-intelligence",
+  "cybersecurity-defense": "cybersecurity",
+};
+
 const BOOKS = [
   { bookId: "san-book", title: "SAN BOOK", description: "Digital learning, academic resources, and practical guides from the SAN ecosystem.", category: "learning-systems", readerUrl: "/innovation-lab/product/san-book", coverTitle: "SAN BOOK", coverSubtitle: "Useful technology\nstronger systems", accent: "#0a1f44", coverInk: "#e8fbff", pageLabel: "01", sortOrder: 1 },
   { bookId: "ai-playbook", title: "AI PLAYBOOK", description: "A practical introduction to building useful AI products and workflows.", category: "artificial-intelligence", readerUrl: "/innovation-lab/product/san-book", coverTitle: "AI\nPLAYBOOK", coverSubtitle: "Build with intelligence", accent: "#087ea4", coverInk: "#f2ffff", pageLabel: "02", sortOrder: 2 },
@@ -98,7 +113,32 @@ const COURSE_DETAILS = {
   },
 };
 
+const COURSE_SKILLS = {
+  "full-stack-software-engineering": ["TypeScript", "React", "Next.js", "API design", "PostgreSQL", "Testing", "Git workflows", "Cloud deployment"],
+  "applied-ai-machine-learning": ["Data analysis", "Python", "Machine learning", "Computer vision", "Prompt design", "Model evaluation", "Responsible AI", "Storytelling"],
+  "cybersecurity-defense": ["Threat modeling", "Network security", "Vulnerability assessment", "Identity and access", "Incident response", "Risk analysis", "Audit trails", "Security culture"],
+};
+
+const COURSE_TOOLS = {
+  "full-stack-software-engineering": ["VS Code", "GitHub", "PostgreSQL", "Figma", "Vercel"],
+  "applied-ai-machine-learning": ["Python", "Jupyter", "OpenAI APIs", "Power BI", "GitHub"],
+  "cybersecurity-defense": ["Linux", "Wireshark", "OWASP tools", "SIEM concepts", "GitHub"],
+};
+
+const toSlug = (value) => value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+
 for (const category of BOOK_CATEGORIES) await upsert("san-hub-book-categories", "slug", category);
+for (const category of COURSE_CATEGORIES) await upsert("course-categories", "slug", { ...category, isActive: true });
+
+for (const [itemId, categorySlug] of Object.entries(COURSE_CATEGORY_BY_ITEM)) {
+  const course = await findOne("san-hub-catalog-items", "itemId", itemId);
+  const category = await findOne("course-categories", "slug", categorySlug);
+  if (!course || !category) continue;
+  await request(`/api/san-hub-catalog-items/${course.documentId}`, {
+    method: "PUT",
+    body: JSON.stringify({ data: { courseCategory: category.documentId } }),
+  });
+}
 
 for (const book of BOOKS) {
   const category = await findOne("san-hub-book-categories", "slug", book.category);
@@ -119,6 +159,34 @@ for (const [itemId, detail] of Object.entries(COURSE_DETAILS)) {
     body: JSON.stringify({ data: { ...detail, publishedAt: new Date().toISOString() } }),
   });
   console.log(`Updated course details: ${itemId}`);
+}
+
+for (const itemId of Object.keys(COURSE_SKILLS)) {
+  const course = await findOne("san-hub-catalog-items", "itemId", itemId);
+  if (!course) continue;
+
+  const skillRecords = [];
+  for (const [sortOrder, name] of COURSE_SKILLS[itemId].entries()) {
+    await upsert("course-skills", "slug", { name, slug: toSlug(name), category: "Course skill", sortOrder });
+    skillRecords.push(await findOne("course-skills", "slug", toSlug(name)));
+  }
+
+  const toolRecords = [];
+  for (const [sortOrder, name] of COURSE_TOOLS[itemId].entries()) {
+    await upsert("course-tools", "slug", { name, slug: toSlug(name), category: "Course tool", sortOrder });
+    toolRecords.push(await findOne("course-tools", "slug", toSlug(name)));
+  }
+
+  await request(`/api/san-hub-catalog-items/${course.documentId}`, {
+    method: "PUT",
+    body: JSON.stringify({
+      data: {
+        skills: { set: skillRecords.filter(Boolean).map((item) => item.documentId) },
+        tools: { set: toolRecords.filter(Boolean).map((item) => item.documentId) },
+      },
+    }),
+  });
+  console.log(`Linked skills and tools: ${itemId}`);
 }
 
 console.log("SAN HUB Phase 3 seed complete.");

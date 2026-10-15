@@ -82,6 +82,11 @@ async function existingTitles(endpoint) {
   return existingSlugs(endpoint, "title");
 }
 
+async function findOne(endpoint, field, value) {
+  const json = await get(`/api/${endpoint}?filters[${field}][$eq]=${encodeURIComponent(value)}&pagination[pageSize]=1&status=draft`);
+  return json.data?.[0] ?? null;
+}
+
 function toBlocks(paragraphs) {
   return paragraphs.map((text) => ({
     type: "paragraph",
@@ -204,10 +209,18 @@ async function seedDrivingChangeStories() {
 // 4. SAN HUB CATALOG ITEMS
 // ═══════════════════════════════════════════════════════════════════════════
 
+const COURSE_CATEGORIES = [
+  { name: "Web development", slug: "web-development", sortOrder: 1 },
+  { name: "Artificial intelligence", slug: "artificial-intelligence", sortOrder: 2 },
+  { name: "Cybersecurity", slug: "cybersecurity", sortOrder: 3 },
+  { name: "IoT & connected devices", slug: "iot-connected-devices", sortOrder: 4 },
+  { name: "Embedded technology", slug: "embedded-technology", sortOrder: 5 },
+  { name: "Digital transformation", slug: "digital-transformation", sortOrder: 6 },
+];
 const SAN_HUB_CATALOG_ITEMS = [
-  { itemId: "full-stack-software-engineering", category: "Courses", focus: "Web development", title: "Full-Stack Software Engineering", provider: "SAN TECH / SAN HUB", description: "Build reliable web and platform experiences from user needs to deployment.", format: "Cohort", duration: "16 weeks", level: "Intermediate", badge: "Featured pathway", sortOrder: 1 },
-  { itemId: "applied-ai-machine-learning", category: "Courses", focus: "Artificial intelligence", title: "Applied AI & Machine Learning", provider: "SAN TECH / SAN HUB", description: "Use computer vision, analytics, and responsible AI to solve practical problems.", format: "Weekend labs", duration: "12 weeks", level: "All levels", sortOrder: 2 },
-  { itemId: "cybersecurity-defense", category: "Courses", focus: "Cybersecurity", title: "Cybersecurity & Threat Intelligence", provider: "SAN TECH / SAN HUB", description: "Learn the habits, tools, and thinking needed to protect systems and information.", format: "Intensive labs", duration: "10 weeks", level: "Intermediate", sortOrder: 3 },
+  { itemId: "full-stack-software-engineering", category: "Courses", courseCategory: "web-development", title: "Full-Stack Software Engineering", provider: "SAN TECH / SAN HUB", description: "Build reliable web and platform experiences from user needs to deployment.", format: "Cohort", duration: "16 weeks", level: "Intermediate", badge: "Featured pathway", sortOrder: 1 },
+  { itemId: "applied-ai-machine-learning", category: "Courses", courseCategory: "artificial-intelligence", title: "Applied AI & Machine Learning", provider: "SAN TECH / SAN HUB", description: "Use computer vision, analytics, and responsible AI to solve practical problems.", format: "Weekend labs", duration: "12 weeks", level: "All levels", sortOrder: 2 },
+  { itemId: "cybersecurity-defense", category: "Courses", courseCategory: "cybersecurity", title: "Cybersecurity & Threat Intelligence", provider: "SAN TECH / SAN HUB", description: "Learn the habits, tools, and thinking needed to protect systems and information.", format: "Intensive labs", duration: "10 weeks", level: "Intermediate", sortOrder: 3 },
   { itemId: "build-with-ai", category: "Upcoming training", title: "Build with AI: practical problem solving", provider: "SAN HUB learning calendar", description: "A guided cohort for turning everyday challenges into useful, testable AI workflows.", format: "Evening cohort", duration: "Starts 14 Oct 2026", level: "Beginner friendly", badge: "Next cohort", sortOrder: 4 },
   { itemId: "digital-product-workshop", category: "Upcoming training", title: "Designing a useful digital product", provider: "SAN HUB learning calendar", description: "A focused workshop on research, prototyping, and making a product easier to use.", format: "One-day workshop", duration: "03 Nov 2026", level: "Open to all", sortOrder: 5 },
   { itemId: "innovation-challenge-lab", category: "Innovation programs", title: "Innovation Challenge Lab", provider: "SAN TECH innovation team", description: "Move a promising question from research and prototyping toward a tested possibility.", format: "Challenge lab", duration: "8-week cycle", level: "Teams and innovators", badge: "Build with us", sortOrder: 6 },
@@ -225,19 +238,38 @@ const SAN_HUB_CATALOG_ITEMS = [
 ];
 
 async function seedSanHubCatalogItems() {
-  console.log("\n🎓  Seeding san-hub-catalog-items…");
-  const existing = await existingSlugs("san-hub-catalog-items", "itemId");
+  console.log("\nSeeding san-hub-catalog-items...");
+  const categoryBySlug = new Map();
   let created = 0, skipped = 0;
 
-  for (const item of SAN_HUB_CATALOG_ITEMS) {
-    if (existing.has(item.itemId)) { log("⏭", `Skip: ${item.itemId}`); skipped++; continue; }
-    try {
-      await post("/api/san-hub-catalog-items", { data: { ...item, publishedAt: publish() } });
-      log("✅", `Created: ${item.itemId}`);
-      created++;
-    } catch (e) { log("❌", `Failed: ${item.itemId} — ${e.message}`); }
+  for (const category of COURSE_CATEGORIES) {
+    const record = await findOne("course-categories", "slug", category.slug);
+    if (record) {
+      categoryBySlug.set(category.slug, record);
+      continue;
+    }
+    const createdCategory = await post("/api/course-categories", { data: { ...category, isActive: true, publishedAt: publish() } });
+    categoryBySlug.set(category.slug, createdCategory.data);
+    log("OK", `Created course category: ${category.name}`);
   }
-  console.log(`   → ${created} created, ${skipped} skipped`);
+
+  for (const item of SAN_HUB_CATALOG_ITEMS) {
+    const { courseCategory: categorySlug, ...catalogItem } = item;
+    const category = categorySlug ? categoryBySlug.get(categorySlug) : null;
+    try {
+      const existingItem = await findOne("san-hub-catalog-items", "itemId", item.itemId);
+      if (existingItem) {
+        if (category) await put(`/api/san-hub-catalog-items/${existingItem.documentId}`, { data: { courseCategory: category.documentId } });
+        log("SKIP", `Existing: ${item.itemId}`);
+        skipped++;
+        continue;
+      }
+      await post("/api/san-hub-catalog-items", { data: { ...catalogItem, ...(category ? { courseCategory: category.documentId } : {}), publishedAt: publish() } });
+      log("OK", `Created: ${item.itemId}`);
+      created++;
+    } catch (e) { log("FAIL", `Failed: ${item.itemId} - ${e.message}`); }
+  }
+  console.log(`   -> ${created} created, ${skipped} skipped`);
 }
 
 // ═══════════════════════════════════════════════════════════════════════════

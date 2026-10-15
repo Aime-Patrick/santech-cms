@@ -542,6 +542,149 @@ export interface ApiContactInfoContactInfo extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiCourseCategoryCourseCategory
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'course_categories';
+  info: {
+    description: 'Categories used to organize SAN HUB courses.';
+    displayName: 'Course Category';
+    pluralName: 'course-categories';
+    singularName: 'course-category';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    catalogItems: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::san-hub-catalog-item.san-hub-catalog-item'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 400;
+      }>;
+    isActive: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::course-category.course-category'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 150;
+      }>;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
+    sortOrder: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiCourseSkillCourseSkill extends Struct.CollectionTypeSchema {
+  collectionName: 'course_skills';
+  info: {
+    description: 'Reusable skills that can be selected for SAN HUB courses.';
+    displayName: 'Course Skill';
+    pluralName: 'course-skills';
+    singularName: 'course-skill';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    category: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 80;
+      }>;
+    courses: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::san-hub-catalog-item.san-hub-catalog-item'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 300;
+      }>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::course-skill.course-skill'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 120;
+      }>;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
+    sortOrder: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiCourseToolCourseTool extends Struct.CollectionTypeSchema {
+  collectionName: 'course_tools';
+  info: {
+    description: 'Reusable tools and technologies that can be selected for SAN HUB courses.';
+    displayName: 'Course Tool';
+    pluralName: 'course-tools';
+    singularName: 'course-tool';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    category: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 80;
+      }>;
+    courses: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::san-hub-catalog-item.san-hub-catalog-item'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 300;
+      }>;
+    iconName: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 80;
+      }>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::course-tool.course-tool'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 120;
+      }>;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
+    sortOrder: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiDrivingChangeStoryDrivingChangeStory
   extends Struct.CollectionTypeSchema {
   collectionName: 'driving_change_stories';
@@ -691,10 +834,48 @@ export interface ApiEVisitorsFeatureEVisitorsFeature
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 100;
       }>;
-    iconName: Schema.Attribute.String &
-      Schema.Attribute.SetMinMaxLength<{
-        maxLength: 80;
-      }> &
+    iconName: Schema.Attribute.Enumeration<
+      [
+        'AlertCircle',
+        'Award',
+        'BarChart3',
+        'BadgeCheck',
+        'BrainCircuit',
+        'BriefcaseBusiness',
+        'Building2',
+        'CalendarDays',
+        'CheckCircle2',
+        'Cloud',
+        'CloudCog',
+        'Code2',
+        'Compass',
+        'Cpu',
+        'Database',
+        'Eye',
+        'FileText',
+        'FlaskConical',
+        'Globe2',
+        'GraduationCap',
+        'Handshake',
+        'HeartHandshake',
+        'Lightbulb',
+        'LockKeyhole',
+        'Mail',
+        'MapPin',
+        'Network',
+        'Radar',
+        'Radio',
+        'Rocket',
+        'ScanLine',
+        'ShieldCheck',
+        'Smartphone',
+        'Target',
+        'Truck',
+        'Users',
+        'Workflow',
+        'Wrench',
+      ]
+    > &
       Schema.Attribute.DefaultTo<'BarChart3'>;
     label: Schema.Attribute.String &
       Schema.Attribute.Required &
@@ -793,10 +974,48 @@ export interface ApiFocusAreaFocusArea extends Struct.CollectionTypeSchema {
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 400;
       }>;
-    iconName: Schema.Attribute.String &
-      Schema.Attribute.SetMinMaxLength<{
-        maxLength: 80;
-      }> &
+    iconName: Schema.Attribute.Enumeration<
+      [
+        'AlertCircle',
+        'Award',
+        'BarChart3',
+        'BadgeCheck',
+        'BrainCircuit',
+        'BriefcaseBusiness',
+        'Building2',
+        'CalendarDays',
+        'CheckCircle2',
+        'Cloud',
+        'CloudCog',
+        'Code2',
+        'Compass',
+        'Cpu',
+        'Database',
+        'Eye',
+        'FileText',
+        'FlaskConical',
+        'Globe2',
+        'GraduationCap',
+        'Handshake',
+        'HeartHandshake',
+        'Lightbulb',
+        'LockKeyhole',
+        'Mail',
+        'MapPin',
+        'Network',
+        'Radar',
+        'Radio',
+        'Rocket',
+        'ScanLine',
+        'ShieldCheck',
+        'Smartphone',
+        'Target',
+        'Truck',
+        'Users',
+        'Workflow',
+        'Wrench',
+      ]
+    > &
       Schema.Attribute.DefaultTo<'Code2'>;
     label: Schema.Attribute.String &
       Schema.Attribute.Required &
@@ -970,10 +1189,48 @@ export interface ApiInnovationServiceInnovationService
         maxLength: 600;
       }>;
     detailBody: Schema.Attribute.Blocks;
-    iconName: Schema.Attribute.String &
-      Schema.Attribute.SetMinMaxLength<{
-        maxLength: 80;
-      }> &
+    iconName: Schema.Attribute.Enumeration<
+      [
+        'AlertCircle',
+        'Award',
+        'BarChart3',
+        'BadgeCheck',
+        'BrainCircuit',
+        'BriefcaseBusiness',
+        'Building2',
+        'CalendarDays',
+        'CheckCircle2',
+        'Cloud',
+        'CloudCog',
+        'Code2',
+        'Compass',
+        'Cpu',
+        'Database',
+        'Eye',
+        'FileText',
+        'FlaskConical',
+        'Globe2',
+        'GraduationCap',
+        'Handshake',
+        'HeartHandshake',
+        'Lightbulb',
+        'LockKeyhole',
+        'Mail',
+        'MapPin',
+        'Network',
+        'Radar',
+        'Radio',
+        'Rocket',
+        'ScanLine',
+        'ShieldCheck',
+        'Smartphone',
+        'Target',
+        'Truck',
+        'Users',
+        'Workflow',
+        'Wrench',
+      ]
+    > &
       Schema.Attribute.DefaultTo<'Code2'>;
     label: Schema.Attribute.String &
       Schema.Attribute.Required &
@@ -1027,10 +1284,48 @@ export interface ApiInnovationSolutionInnovationSolution
         maxLength: 600;
       }>;
     detailBody: Schema.Attribute.Blocks;
-    iconName: Schema.Attribute.String &
-      Schema.Attribute.SetMinMaxLength<{
-        maxLength: 80;
-      }> &
+    iconName: Schema.Attribute.Enumeration<
+      [
+        'AlertCircle',
+        'Award',
+        'BarChart3',
+        'BadgeCheck',
+        'BrainCircuit',
+        'BriefcaseBusiness',
+        'Building2',
+        'CalendarDays',
+        'CheckCircle2',
+        'Cloud',
+        'CloudCog',
+        'Code2',
+        'Compass',
+        'Cpu',
+        'Database',
+        'Eye',
+        'FileText',
+        'FlaskConical',
+        'Globe2',
+        'GraduationCap',
+        'Handshake',
+        'HeartHandshake',
+        'Lightbulb',
+        'LockKeyhole',
+        'Mail',
+        'MapPin',
+        'Network',
+        'Radar',
+        'Radio',
+        'Rocket',
+        'ScanLine',
+        'ShieldCheck',
+        'Smartphone',
+        'Target',
+        'Truck',
+        'Users',
+        'Workflow',
+        'Wrench',
+      ]
+    > &
       Schema.Attribute.DefaultTo<'Globe2'>;
     label: Schema.Attribute.String &
       Schema.Attribute.Required &
@@ -1527,8 +1822,12 @@ export interface ApiSanHubCatalogItemSanHubCatalogItem
       ]
     > &
       Schema.Attribute.Required;
-    courseSeries: Schema.Attribute.JSON;
-    courseTestimonials: Schema.Attribute.JSON;
+    courseCategory: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::course-category.course-category'
+    >;
+    courseSeries: Schema.Attribute.Component<'course.series-item', true>;
+    courseTestimonials: Schema.Attribute.Component<'course.testimonial', true>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1537,21 +1836,11 @@ export interface ApiSanHubCatalogItemSanHubCatalogItem
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 500;
       }>;
-    details: Schema.Attribute.JSON;
+    details: Schema.Attribute.Component<'course.detail', true>;
     duration: Schema.Attribute.String &
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 100;
       }>;
-    focus: Schema.Attribute.Enumeration<
-      [
-        'Web development',
-        'Artificial intelligence',
-        'Cybersecurity',
-        'IoT & connected devices',
-        'Embedded technology',
-        'Digital transformation',
-      ]
-    >;
     format: Schema.Attribute.String &
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 100;
@@ -1562,7 +1851,7 @@ export interface ApiSanHubCatalogItemSanHubCatalogItem
         maxLength: 200;
       }>;
     itemId: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
-    learningOutcomes: Schema.Attribute.JSON;
+    learningOutcomes: Schema.Attribute.Component<'course.list-item', true>;
     level: Schema.Attribute.String &
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 100;
@@ -1590,9 +1879,12 @@ export interface ApiSanHubCatalogItemSanHubCatalogItem
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 100;
       }>;
-    skills: Schema.Attribute.JSON;
+    skills: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::course-skill.course-skill'
+    >;
     sortOrder: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
-    stats: Schema.Attribute.JSON;
+    stats: Schema.Attribute.Component<'course.stat', true>;
     subtitle: Schema.Attribute.Text &
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 500;
@@ -1602,7 +1894,10 @@ export interface ApiSanHubCatalogItemSanHubCatalogItem
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 255;
       }>;
-    tools: Schema.Attribute.JSON;
+    tools: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::course-tool.course-tool'
+    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1908,10 +2203,48 @@ export interface ApiTechnologyCategoryTechnologyCategory
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 400;
       }>;
-    iconName: Schema.Attribute.String &
-      Schema.Attribute.SetMinMaxLength<{
-        maxLength: 80;
-      }> &
+    iconName: Schema.Attribute.Enumeration<
+      [
+        'AlertCircle',
+        'Award',
+        'BarChart3',
+        'BadgeCheck',
+        'BrainCircuit',
+        'BriefcaseBusiness',
+        'Building2',
+        'CalendarDays',
+        'CheckCircle2',
+        'Cloud',
+        'CloudCog',
+        'Code2',
+        'Compass',
+        'Cpu',
+        'Database',
+        'Eye',
+        'FileText',
+        'FlaskConical',
+        'Globe2',
+        'GraduationCap',
+        'Handshake',
+        'HeartHandshake',
+        'Lightbulb',
+        'LockKeyhole',
+        'Mail',
+        'MapPin',
+        'Network',
+        'Radar',
+        'Radio',
+        'Rocket',
+        'ScanLine',
+        'ShieldCheck',
+        'Smartphone',
+        'Target',
+        'Truck',
+        'Users',
+        'Workflow',
+        'Wrench',
+      ]
+    > &
       Schema.Attribute.DefaultTo<'Code2'>;
     items: Schema.Attribute.JSON;
     label: Schema.Attribute.String &
@@ -2572,6 +2905,9 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::company-value.company-value': ApiCompanyValueCompanyValue;
       'api::contact-info.contact-info': ApiContactInfoContactInfo;
+      'api::course-category.course-category': ApiCourseCategoryCourseCategory;
+      'api::course-skill.course-skill': ApiCourseSkillCourseSkill;
+      'api::course-tool.course-tool': ApiCourseToolCourseTool;
       'api::driving-change-story.driving-change-story': ApiDrivingChangeStoryDrivingChangeStory;
       'api::driving-change-topic.driving-change-topic': ApiDrivingChangeTopicDrivingChangeTopic;
       'api::e-visitors-feature.e-visitors-feature': ApiEVisitorsFeatureEVisitorsFeature;

@@ -47,6 +47,7 @@ const groups: WorkspaceGroup[] = [
     description: 'Manage learning, programs, and ecosystem pathways.',
     links: [
       { label: 'Courses and Programs', description: 'Catalog items shown in SAN HUB', uid: 'api::san-hub-catalog-item.san-hub-catalog-item' },
+      { label: 'Course Categories', description: 'Manage the categories used by SAN HUB courses', uid: 'api::course-category.course-category' },
     ],
   },
   {
