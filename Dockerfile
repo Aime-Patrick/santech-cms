@@ -35,6 +35,9 @@ COPY . .
 ENV NODE_ENV=production
 RUN npm run build
 
+# Fail the image build if the Admin shell was not generated.
+RUN test -f /opt/app/dist/build/index.html
+
 # Remove development dependencies to keep production light
 RUN npm prune --production
 
@@ -55,6 +58,8 @@ ENV NODE_ENV=production
 COPY --from=build /opt/app/package.json ./package.json
 COPY --from=build /opt/app/node_modules ./node_modules
 COPY --from=build /opt/app/dist ./dist
+# Strapi's Admin server uses this fallback when the project dist path is not resolved.
+COPY --from=build /opt/app/dist/build ./node_modules/@strapi/admin/dist/server/server/build
 COPY --from=build /opt/app/.strapi ./.strapi
 COPY --from=build /opt/app/dist/config ./config
 COPY --from=build /opt/app/public ./public
