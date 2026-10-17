@@ -35,8 +35,9 @@ COPY . .
 ENV NODE_ENV=production
 RUN npm run build
 
-# Fail the image build if the Admin shell was not generated.
-RUN test -f /opt/app/dist/build/index.html
+# Fail the image build if the Admin shell and custom schemas were not generated.
+RUN test -f /opt/app/dist/build/index.html && \
+    test -f /opt/app/dist/src/api/certificate/content-types/certificate/schema.json
 
 # Remove development dependencies to keep production light
 RUN npm prune --production
@@ -62,6 +63,8 @@ COPY --from=build /opt/app/dist ./dist
 COPY --from=build /opt/app/dist/build ./node_modules/@strapi/admin/dist/server/server/build
 COPY --from=build /opt/app/.strapi ./.strapi
 COPY --from=build /opt/app/dist/config ./config
+# Strapi discovers application content types from the runtime source tree.
+COPY --from=build /opt/app/src ./src
 COPY --from=build /opt/app/public ./public
 COPY --from=build /opt/app/database ./database
 COPY --from=build /opt/app/favicon.png ./favicon.png
