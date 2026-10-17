@@ -31,7 +31,7 @@ RUN npm ci
 # Copy application source code
 COPY . .
 
-# Set production environment and build the admin panel + TypeScript
+# Build: compiles TypeScript to dist/ then builds the Strapi admin panel
 ENV NODE_ENV=production
 RUN npm run build
 
