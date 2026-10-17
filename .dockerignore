@@ -1,0 +1,12 @@
+.git
+.tmp
+.cache
+.swc-cache
+node_modules
+dist
+.strapi
+build
+*.log
+.env
+.env.local
+.env.*.local

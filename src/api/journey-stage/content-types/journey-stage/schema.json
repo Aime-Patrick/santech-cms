@@ -12,6 +12,8 @@
     "year": { "type": "string", "required": true, "maxLength": 10 },
     "stage": { "type": "string", "required": true, "maxLength": 100 },
     "description": { "type": "text", "required": true, "maxLength": 500 },
+    "image": { "type": "media", "multiple": false, "required": false, "allowedTypes": ["images"] },
+    "imageAlt": { "type": "string", "maxLength": 255 },
     "sortOrder": { "type": "integer", "default": 0 }
   }
 }

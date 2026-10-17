@@ -84,6 +84,7 @@ const groups: WorkspaceGroup[] = [
     title: 'Our Legacy',
     description: 'Manage company history, people, recognition, and identity.',
     links: [
+      { label: 'Certificates', description: 'Accreditations and trust documents', uid: 'api::certificate.certificate' },
       { label: 'Company Values', description: 'Values and principles', uid: 'api::company-value.company-value' },
       { label: 'Focus Areas', description: 'Technology focus areas', uid: 'api::focus-area.focus-area' },
       { label: 'Journey Stages', description: 'Company milestones', uid: 'api::journey-stage.journey-stage' },

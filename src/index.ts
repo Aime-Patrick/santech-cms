@@ -54,6 +54,8 @@ const PUBLIC_PERMISSIONS: Array<{ action: string }> = [
   { action: 'api::contact-info.contact-info.find' },
   // Our Legacy — standards / trust seals
   { action: 'api::standard.standard.find' },
+  // Our Legacy — certificates
+  { action: 'api::certificate.certificate.find' },
   // Global site settings (single type)
   { action: 'api::site-setting.site-setting.find' },
   // Our Legacy page (single type)
