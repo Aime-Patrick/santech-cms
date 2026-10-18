@@ -63,6 +63,7 @@ RUN addgroup -g 1001 -S strapi && \
 # Strapi production must load the compiled API tree from dist/src. Copying both
 # dist/src and the root src tree can register duplicate or malformed routes.
 COPY --chown=strapi:strapi --from=build /opt/app/package.json ./package.json
+COPY --chown=strapi:strapi --from=build /opt/app/tsconfig.json ./tsconfig.json
 COPY --chown=strapi:strapi --from=build /opt/app/node_modules ./node_modules
 COPY --chown=strapi:strapi --from=build /opt/app/dist/build ./dist/build
 # Strapi's Admin server uses this fallback when the project dist path is not resolved.
