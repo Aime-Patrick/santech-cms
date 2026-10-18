@@ -55,15 +55,16 @@ WORKDIR /opt/app
 # Set production environment
 ENV NODE_ENV=production
 
-# Copy built artifacts and production node_modules from build stage
+# Copy the Admin build, production dependencies, and runtime application source.
+# Do not copy dist/src as well as src: duplicate API trees can register malformed
+# duplicate routes in Strapi's Content API route map.
 COPY --from=build /opt/app/package.json ./package.json
 COPY --from=build /opt/app/node_modules ./node_modules
-COPY --from=build /opt/app/dist ./dist
+COPY --from=build /opt/app/dist/build ./dist/build
 # Strapi's Admin server uses this fallback when the project dist path is not resolved.
 COPY --from=build /opt/app/dist/build ./node_modules/@strapi/admin/dist/server/server/build
 COPY --from=build /opt/app/.strapi ./.strapi
 COPY --from=build /opt/app/dist/config ./config
-# Strapi discovers application content types from the runtime source tree.
 COPY --from=build /opt/app/src ./src
 # Keep maintenance and catalogue seed commands available in the production container.
 COPY --from=build /opt/app/scripts ./scripts
