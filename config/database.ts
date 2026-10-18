@@ -12,9 +12,12 @@ const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Database 
   }
 
   const databaseUrl = env('DATABASE_URL', '');
-  const databaseNameFromUrl = databaseUrl
-    ? new URL(databaseUrl).pathname.replace(/^\//, '') || ''
-    : '';
+  const postgresUrl = databaseUrl ? new URL(databaseUrl) : undefined;
+  const databaseNameFromUrl = postgresUrl?.pathname.replace(/^\//, '') || '';
+  const databaseHostFromUrl = postgresUrl?.hostname || '';
+  const databasePortFromUrl = postgresUrl?.port ? Number(postgresUrl.port) : 5432;
+  const databaseUserFromUrl = postgresUrl ? decodeURIComponent(postgresUrl.username) : '';
+  const databasePasswordFromUrl = postgresUrl ? decodeURIComponent(postgresUrl.password) : '';
 
   const connections: Record<Core.Config.Database.ClientKind, Core.Config.Database['connection']> = {
     mysql: {
@@ -40,11 +43,11 @@ const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Database 
       client: 'postgres',
       connection: {
         connectionString: databaseUrl,
-        host: env('DATABASE_HOST', ''),
-        port: env.int('DATABASE_PORT', 5432),
+        host: env('DATABASE_HOST', databaseHostFromUrl),
+        port: env.int('DATABASE_PORT', databasePortFromUrl),
         database: env('DATABASE_NAME', databaseNameFromUrl),
-        user: env('DATABASE_USERNAME', ''),
-        password: env('DATABASE_PASSWORD', ''),
+        user: env('DATABASE_USERNAME', databaseUserFromUrl),
+        password: env('DATABASE_PASSWORD', databasePasswordFromUrl),
         ssl: env.bool('DATABASE_SSL', false) && {
           key: env('DATABASE_SSL_KEY', undefined),
           cert: env('DATABASE_SSL_CERT', undefined),
