@@ -65,6 +65,8 @@ COPY --from=build /opt/app/.strapi ./.strapi
 COPY --from=build /opt/app/dist/config ./config
 # Strapi discovers application content types from the runtime source tree.
 COPY --from=build /opt/app/src ./src
+# Keep maintenance and catalogue seed commands available in the production container.
+COPY --from=build /opt/app/scripts ./scripts
 COPY --from=build /opt/app/public ./public
 COPY --from=build /opt/app/database ./database
 COPY --from=build /opt/app/favicon.png ./favicon.png

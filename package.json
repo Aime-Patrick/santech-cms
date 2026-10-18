@@ -17,6 +17,7 @@
     "seed:content": "node scripts/seed-content.mjs",
     "seed:foundation": "node scripts/seed-foundation.mjs",
     "seed:san-hub": "node scripts/seed-san-hub.mjs",
+    "seed:training-catalogue": "node scripts/seed-training-catalogue.mjs",
     "migrate:san-hub-identifiers": "node scripts/migrate-san-hub-identifiers.mjs",
     "seed:legacy": "node scripts/seed-legacy.mjs",
     "seed:driving-change-topics": "node scripts/seed-driving-change-topics.mjs",
