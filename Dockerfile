@@ -69,7 +69,7 @@ COPY --chown=strapi:strapi --from=build /opt/app/dist/build ./dist/build
 # Strapi's Admin server uses this fallback when the project dist path is not resolved.
 COPY --chown=strapi:strapi --from=build /opt/app/dist/build ./node_modules/@strapi/admin/dist/server/server/build
 COPY --chown=strapi:strapi --from=build /opt/app/.strapi ./.strapi
-COPY --chown=strapi:strapi --from=build /opt/app/dist/config ./config
+COPY --chown=strapi:strapi --from=build /opt/app/dist/config ./dist/config
 COPY --chown=strapi:strapi --from=build /opt/app/dist/src ./dist/src
 # Keep maintenance and catalogue seed commands available in the production container.
 COPY --chown=strapi:strapi --from=build /opt/app/scripts ./scripts
