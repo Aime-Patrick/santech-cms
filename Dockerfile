@@ -59,9 +59,9 @@ ENV NODE_ENV=production
 RUN addgroup -g 1001 -S strapi && \
     adduser -u 1001 -S strapi -G strapi
 
-# Copy the Admin build, production dependencies, and runtime application source.
-# Do not copy dist/src as well as src: duplicate API trees can register malformed
-# duplicate routes in Strapi's Content API route map.
+# Copy the Admin build, production dependencies, and compiled runtime application.
+# Strapi production must load the compiled API tree from dist/src. Copying both
+# dist/src and the root src tree can register duplicate or malformed routes.
 COPY --chown=strapi:strapi --from=build /opt/app/package.json ./package.json
 COPY --chown=strapi:strapi --from=build /opt/app/node_modules ./node_modules
 COPY --chown=strapi:strapi --from=build /opt/app/dist/build ./dist/build
@@ -69,7 +69,7 @@ COPY --chown=strapi:strapi --from=build /opt/app/dist/build ./dist/build
 COPY --chown=strapi:strapi --from=build /opt/app/dist/build ./node_modules/@strapi/admin/dist/server/server/build
 COPY --chown=strapi:strapi --from=build /opt/app/.strapi ./.strapi
 COPY --chown=strapi:strapi --from=build /opt/app/dist/config ./config
-COPY --chown=strapi:strapi --from=build /opt/app/src ./src
+COPY --chown=strapi:strapi --from=build /opt/app/dist/src ./dist/src
 # Keep maintenance and catalogue seed commands available in the production container.
 COPY --chown=strapi:strapi --from=build /opt/app/scripts ./scripts
 COPY --chown=strapi:strapi --from=build /opt/app/public ./public
